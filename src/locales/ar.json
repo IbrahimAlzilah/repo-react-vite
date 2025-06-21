@@ -1,0 +1,12 @@
+  {
+    "welcomeAuth": "مرحبًا بك في الانظمام معنا!",
+    "headerTitle": "تطبيقي الرائع",
+    "toggleTheme": "الثيم",
+    "toggleLanguage": "اللغة",
+    "welcomeMessage": "مرحباً بك في تطبيقنا!",
+    "currentLanguage": "اللغة الحالية:",
+    "footerText": "بُني باستخدام React و Context API.",
+    "using": "استخدام",
+    "appName": "تطبيقي",
+    "notFound": "لم يتم العثور على الصفحة"
+  }

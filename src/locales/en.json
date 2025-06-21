@@ -1,0 +1,12 @@
+{
+  "welcomeAuth": "مرحبًا بك في الانظمام معنا!",
+  "headerTitle": "My Awesome App",
+  "toggleTheme": "Theme",
+  "toggleLanguage": "Language",
+  "welcomeMessage": "Welcome to our application!",
+  "currentLanguage": "Current Language:",
+  "footerText": "Built with React and Context API.",
+  "using": "Using",
+  "appName": "My App",
+  "notFound": "Page Not Found"
+}
