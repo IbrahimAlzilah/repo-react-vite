@@ -11,7 +11,7 @@ function NotFoundPage() {
 
   return (
     <Card className="text-center page-content">
-      <h2 className="text-4xl font-bold mb-4 text-gray-800">
+      <h2 className="text-3xl font-bold mb-4 text-gray-800">
         404 - لم يتم العثور على الصفحة
       </h2>
       <p className="text-gray-600">عذرًا، الصفحة التي تبحث عنها غير موجودة.</p>

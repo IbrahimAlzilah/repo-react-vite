@@ -2,41 +2,41 @@
 
 /* Expo Arabic Font */
 @font-face {
-    font-family: 'Expo Arabic';
-    src: url('./assets/fonts/ExpoArabic-Book.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Expo Arabic';
+  src: url('./assets/fonts/ExpoArabic-Book.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Expo Arabic';
-    src: url('./assets/fonts/ExpoArabic-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Expo Arabic';
+  src: url('./assets/fonts/ExpoArabic-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Expo Arabic';
-    src: url('./assets/fonts/ExpoArabic-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Expo Arabic';
+  src: url('./assets/fonts/ExpoArabic-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Expo Arabic';
-    src: url('./assets/fonts/ExpoArabic-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Expo Arabic';
+  src: url('./assets/fonts/ExpoArabic-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* Default font variables */
 :root {
-    --font-primary: 'Expo Arabic', system-ui, -apple-system, sans-serif;
-} 
+  --font-primary: 'Expo Arabic', system-ui, -apple-system, sans-serif;
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -117,7 +117,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-[data-theme="light"] button {
+[data-theme="light"] button:not(.MuiIconButton-root) {
   color: #f0f0f0 !important;
 }
 
@@ -146,7 +146,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   color: #f0f0f0;
   border-radius: 8px 8px 0 0;
   border: 1px solid transparent;
@@ -308,4 +308,22 @@ input::placeholder {
   -webkit-line-clamp: unset;
   /* Show full text on hover */
   overflow: visible;
+}
+
+/* Custom Css For MUI */
+.css-1r9wl67-MuiCardHeader-avatar {
+  margin-right: 0 !important;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.css-1rju2q6-MuiButtonBase-root-MuiMenuItem-root a {
+  color: inherit;
+}
+
+.css-1rju2q6-MuiButtonBase-root-MuiMenuItem-root a.active {
+  color: #535ad7;
+  font-weight: 600;
 }

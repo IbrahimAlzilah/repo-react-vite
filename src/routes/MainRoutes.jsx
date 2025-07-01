@@ -1,30 +1,62 @@
-import { Routes, Route } from "react-router-dom";
-
-// project imports
+import React, { lazy, Suspense } from "react";
+import { Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
+import ProtectedRoute from "./ProtectedRoute";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
-// Import all page components
-import PropsPage from "../pages/PropsPage";
-import UseStatePage from "../pages/UseState";
-import UseEffectPage from "../pages/UseEffect";
-import UseRefPage from "../pages/UseRef";
-import UseContextPage from "../pages/UseContext";
-import NotFoundPage from "../pages/NotFound"; // Don't forget 404 page!
+// Lazy-loaded pages
+const PropsPage = lazy(() => import("../pages/PropsPage"));
+const UseState = lazy(() => import("../pages/UseState"));
+const UseEffect = lazy(() => import("../pages/UseEffect"));
+const UseRef = lazy(() => import("../pages/UseRef"));
+const UseContext = lazy(() => import("../pages/UseContext"));
+const MuiPage = lazy(() => import("../pages/MuiPage"));
+const ToDoList = lazy(() => import("../pages/ToDoList"));
 
-const MainRoutes = () => {
-  return (
-    <MainLayout>
-      <Routes>
-        <Route path="/" element={<PropsPage />} />
-        <Route path="/useState" element={<UseStatePage />} />
-        <Route path="/useEffect" element={<UseEffectPage />} />
-        <Route path="/useRef" element={<UseRefPage />} />
-        <Route path="/useContext" element={<UseContextPage />} />
-        {/* Catch-all route for any undefined paths (404 Not Found) */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </MainLayout>
-  );
-};
+const LoadingFallback = () => (
+  <Box sx={{ width: "100%", minHeight: "60vh", padding: 2 }}>
+    <CircularProgress color="primary" size="3rem" />
+  </Box>
+);
+
+const routes = [
+  { path: "/", element: <PropsPage /> },
+  { path: "/useState", element: <UseState /> },
+  { path: "/useEffect", element: <UseEffect /> },
+  { path: "/useRef", element: <UseRef /> },
+  { path: "/useContext", element: <UseContext /> },
+  { path: "/mui", element: <MuiPage /> },
+  { path: "/todoList", element: <ToDoList /> },
+];
+
+const MainRoutes = () => [
+  <Route
+    key="main"
+    element={
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
+    }
+  >
+    <Route
+      index
+      element={
+        <Suspense fallback={<LoadingFallback />}>
+          <PropsPage />
+        </Suspense>
+      }
+    />
+    {routes.slice(1).map((route, i) => (
+      <Route
+        key={i}
+        path={route.path}
+        element={
+          <Suspense fallback={<LoadingFallback />}>{route.element}</Suspense>
+        }
+      />
+    ))}
+  </Route>,
+];
 
 export default MainRoutes;

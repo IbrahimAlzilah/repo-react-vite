@@ -8,5 +8,10 @@
     "footerText": "بُني باستخدام React و Context API.",
     "using": "استخدام",
     "appName": "تطبيقي",
-    "notFound": "لم يتم العثور على الصفحة"
+    "notFound": "لم يتم العثور على الصفحة",
+    "auth": {
+      "name": "الاسم",
+      "username": "اسم المستخدم",
+      "password": "كلمة المرور"
+    }
   }

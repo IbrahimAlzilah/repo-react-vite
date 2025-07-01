@@ -13,8 +13,8 @@ function State() {
   return (
     <>
       <Divider title={t.using + " useState"} />
-      <SafeCounter />
       <TodoList />
+      <SafeCounter />
       <UserProfileEditor />
     </>
   );

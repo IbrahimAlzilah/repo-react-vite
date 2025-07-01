@@ -1,23 +1,16 @@
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-
-// project imports
 import AuthLayout from "../layouts/AuthLayout";
-
-// Import all page components
 import LoginPage from "../pages/Auth/LoginPage";
 import RegisterPage from "../pages/Auth/RegisterPage";
-import NotFoundPage from "../pages/NotFound"; // Don't forget 404 page!
+import NotFoundPage from "../pages/NotFound";
 
-const AuthRoutes = () => {
-  return (
-    <AuthLayout>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </AuthLayout>
-  );
-};
+const AuthRoutes = () => [
+  <Route key="auth" element={<AuthLayout />}>
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/register" element={<RegisterPage />} />
+  </Route>,
+  <Route key="404" path="*" element={<NotFoundPage />} />,
+];
 
 export default AuthRoutes;

@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
@@ -9,25 +10,9 @@ import Divider from "../../components/ui/Divider";
 import Header from "./Header";
 import Footer from "./Footer";
 
-// function MainLayout() {
-//   return (
-//     // The Router must wrap all components that use routing (Link, NavLink, Routes)
-//     // <Router>
-//     <div className="App min-h-screen flex flex-col">
-//       {/* Header will contain the Navigation links */}
-//       <Header />
-//       {/* Main content area where different pages will be rendered based on routes */}
-//       <Content />
-//       {/* Footer, if it doesn't need routing, can remain outside the Routes block */}
-//       <Footer />
-//     </div>
-//     // </Router>
-//   );
-// }
-
-function MainLayout({ children }) {
+function MainLayout() {
   const { theme } = useContext(ThemeContext);
-  const { t } = useContext(LanguageContext); // Content لا تحتاج لتغيير اللغة، فقط الترجمة
+  const { t } = useContext(LanguageContext);
 
   const contentStyle = {
     background: theme === "dark" ? "#1e1e1e" : "white",
@@ -45,7 +30,7 @@ function MainLayout({ children }) {
           <h2 className="text-xl">{t.welcomeMessage}</h2>
           <Divider />
         </div>
-        {children}
+        <Outlet />
       </main>
       {/* Footer, if it doesn't need routing, can remain outside the Routes block */}
       <Footer />

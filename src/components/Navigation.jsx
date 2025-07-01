@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { LanguageContext } from "../contexts/LanguageContext";
+import { NavLink, useParams } from "react-router-dom";
+import { Menu, MenuItem, ListItemText } from "@mui/material";
 
 // SVG for menu icon
 const menuIcon = (
@@ -44,14 +47,35 @@ const closeIcon = (
 
 const links = [
   { name: "Props", path: "/" },
-  { name: "useState", path: "/useState" },
-  { name: "useEffect", path: "/useEffect" },
-  { name: "useRef", path: "/useRef" },
-  { name: "useContext", path: "/useContext" },
+  {
+    name: "Hooks",
+    children: [
+      [
+        { name: "useState", path: "/useState" },
+        { name: "useEffect", path: "/useEffect" },
+        { name: "useRef", path: "/useRef" },
+        { name: "useContext", path: "/useContext" },
+        { name: "useMemo", path: "/useMemo" },
+        { name: "useReducer", path: "/useReducer" },
+        { name: "useParams", path: "/useParams" },
+      ],
+    ],
+  },
+  { name: "MUI", path: "/mui" },
+  { name: "Todo", path: "/todoList" },
 ];
 
 function Navigation() {
+  // States
+  const { language } = useContext(LanguageContext);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
+  // Test Menu
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -70,22 +94,81 @@ function Navigation() {
 
       {/* Desktop Navigation Links (hidden on small screens) */}
       <nav className="hidden md:block">
-        <ul className="flex justify-center space-x-3 text-lg font-medium">
+        <ul className="flex items-center justify-center space-x-1 text-lg font-medium">
           {links.map((link) => (
             <li key={link.name}>
-              <NavLink
-                to={link.path}
-                // Dynamically apply Tailwind classes based on active state
-                className={({ isActive }) =>
-                  `block p-2 rounded-md text-sm transition-colors duration-200 ${
-                    isActive ? "active" : "text-blue-100"
-                  }`
-                }
-                // Use 'end' for exact matching, especially for the root path '/'
-                end={link.path === "/"}
-              >
-                {link.name}
-              </NavLink>
+              {link.children ? (
+                // Example dropdown for links with children (customize as needed)
+                <div className="relative group">
+                  {/* <ListItemText
+                    to="#"
+                    className="text-sm cursor-pointer text-inheri"
+                    aria-controls={open ? "basic-menu2" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={(event) => setAnchorEl(event.currentTarget)}
+                  >
+                    {link.name}
+                  </ListItemText> */}
+                  <div
+                    to="#"
+                    className="text-sm cursor-pointer text-inheri"
+                    aria-controls={open ? "basic-menu2" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={(event) => setAnchorEl(event.currentTarget)}
+                  >
+                    {link.name}
+                  </div>
+                  <Menu
+                    id="basic-menu2"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    slotProps={{
+                      list: {
+                        "aria-labelledby": "basic-button",
+                      },
+                    }}
+                    transformOrigin={{
+                      horizontal: language === "ar" ? "right" : "left",
+                      vertical: "top",
+                    }}
+                    anchorOrigin={{
+                      horizontal: language === "ar" ? "right" : "left",
+                      vertical: "bottom",
+                    }}
+                  >
+                    {link.children[0].map((child) => (
+                      <MenuItem key={child.name} onClick={handleClose}>
+                        <NavLink
+                          to={child.path}
+                          className={({ isActive }) =>
+                            `block px-2 py-1 text-sm rounded-md transition-colors duration-200 ${
+                              isActive ? "active" : "text-blue-100"
+                            }`
+                          }
+                          end={child.path === "/"}
+                        >
+                          {child.name}
+                        </NavLink>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </div>
+              ) : (
+                <NavLink
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `block p-2 rounded-md text-sm transition-colors duration-200 ${
+                      isActive ? "active" : "text-blue-100"
+                    }`
+                  }
+                  end={link.path === "/"}
+                >
+                  {link.name}
+                </NavLink>
+              )}
             </li>
           ))}
         </ul>
@@ -93,7 +176,7 @@ function Navigation() {
 
       {/* Mobile Menu Overlay (conditionally rendered) */}
       {isMenuOpen && (
-        <div className="absolute top-[80px] left-0 right-0 bg-blue-800 md:hidden z-10 shadow-lg rounded-b-lg py-4">
+        <div className="absolute top-[80px] left-0 right-0 bg-gray-200 md:hidden z-10 shadow-lg rounded-b-lg p-4">
           <ul className="flex flex-col items-center space-y-3">
             {links.map((link) => (
               <li key={link.name} className="w-full text-center">
