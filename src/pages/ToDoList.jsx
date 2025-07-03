@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Divider from "../components/ui/Divider";
+import TodoList from "../components/TodoList";
 
 const ToDoList = () => {
   return (
-    <div>ToDoList</div>
-  )
-}
+    <>
+    <Divider title={"تطبيق قائمة المهام"} />
+      <TodoList />
+    </>
+  );
+};
 
-export default ToDoList
+export default ToDoList;

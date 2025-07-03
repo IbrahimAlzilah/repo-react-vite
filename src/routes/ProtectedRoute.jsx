@@ -4,18 +4,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 export default function ProtectedRoute({ children }) {
-  const { user, isLoading, isAuthenticated } = useAuth();
+  const { isLoading, isAuthenticated } = useAuth();
 
   // Show loading spinner while checking authentication
   if (isLoading) {
     return (
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-        }}
+        className="flex justify-center items-center min-h[100]"
+        sx={{ minHeight: "100vh" }}
       >
         <CircularProgress color="primary" size="3rem" />
       </Box>

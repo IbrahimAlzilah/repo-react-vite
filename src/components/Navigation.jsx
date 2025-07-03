@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useContext } from "react";
 import { LanguageContext } from "../contexts/LanguageContext";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Menu, MenuItem, ListItemText } from "@mui/material";
 
 // SVG for menu icon
@@ -62,7 +62,7 @@ const links = [
     ],
   },
   { name: "MUI", path: "/mui" },
-  { name: "Todo", path: "/todoList" },
+  { name: "Todo List", path: "/todoList" },
 ];
 
 function Navigation() {
