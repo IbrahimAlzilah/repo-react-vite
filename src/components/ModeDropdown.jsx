@@ -7,7 +7,7 @@ const ModeDropdown = () => {
 
   return (
     <Button
-      text={theme === "dark" ? "Dark" : "Light"}
+      text={theme}
       onClick={toggleTheme}
       className="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors"
     />

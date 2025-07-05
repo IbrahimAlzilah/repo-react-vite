@@ -8,13 +8,13 @@ export function ThemeProvider({ children }) {
   // يمكننا محاولة جلب السمة المفضلة من Local Storage
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem("app-theme");
-    return savedTheme || "light"; // القيمة الافتراضية إذا لم توجد
+    // This is the key change:
+    return savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); // القيمة الافتراضية إذا لم توجد
   });
 
-  // استخدام useEffect لحفظ السمة في Local Storage عند تغييرها
+  // استخدام useEffect لحفظ السمة في Local Storage وتطبيقها على DOM
   useEffect(() => {
     localStorage.setItem("app-theme", theme);
-    // يمكننا أيضاً تحديث فئة الـ body لتطبيق السمة على مستوى CSS
     document.body.className = theme;
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]); // يُنفذ هذا الـ effect كلما تغيرت السمة

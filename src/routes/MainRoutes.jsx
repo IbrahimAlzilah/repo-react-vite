@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
@@ -13,6 +13,7 @@ const UseRef = lazy(() => import("../pages/UseRef"));
 const UseContext = lazy(() => import("../pages/UseContext"));
 const MuiPage = lazy(() => import("../pages/MuiPage"));
 const ToDoList = lazy(() => import("../pages/ToDoList"));
+const UserProfile = lazy(() => import("../pages/UserProfile"));
 
 const LoadingFallback = () => (
   <Box sx={{ width: "100%", minHeight: "60vh", padding: 2 }}>
@@ -28,6 +29,7 @@ const routes = [
   { path: "/useContext", element: <UseContext /> },
   { path: "/mui", element: <MuiPage /> },
   { path: "/todoList", element: <ToDoList /> },
+  { path: "/user-profile", element: <UserProfile /> },
 ];
 
 const MainRoutes = () => [

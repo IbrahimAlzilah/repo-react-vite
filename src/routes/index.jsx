@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes } from "react-router-dom";
 
 import { AuthProvider } from "../contexts/auth";
@@ -7,8 +6,8 @@ import AuthRoutes from "./AuthRoutes";
 
 const AppRoutes = () => {
   return (
-    <Router>
-      <AuthProvider>
+    <AuthProvider>
+      <Router>
         <Routes>
           {/* Auth routes (no protection) */}
           {AuthRoutes()}
@@ -16,8 +15,8 @@ const AppRoutes = () => {
           {/* Main routes (protected) */}
           {MainRoutes()}
         </Routes>
-      </AuthProvider>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 };
 

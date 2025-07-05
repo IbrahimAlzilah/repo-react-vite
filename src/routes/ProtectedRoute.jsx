@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }) {
   if (isLoading) {
     return (
       <Box
-        className="flex justify-center items-center min-h[100]"
+        className="flex justify-center items-center min-h-[100vh]"
         sx={{ minHeight: "100vh" }}
       >
         <CircularProgress color="primary" size="3rem" />

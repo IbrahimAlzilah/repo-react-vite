@@ -7,6 +7,7 @@ import {
   useCallback,
 } from "react";
 
+// 1. إنشاء Context
 const AuthContext = createContext(null);
 
 // Helper functions for localStorage operations
@@ -47,6 +48,7 @@ const clearStoredAuth = () => {
   }
 };
 
+// 2. إنشاء مكون Provider (اختياري، لكنه ممارسة جيدة)
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
@@ -76,7 +78,7 @@ export function AuthProvider({ children }) {
         setUser(null);
         setToken(null);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); //loading is globally
       }
     };
 
@@ -140,6 +142,7 @@ export function AuthProvider({ children }) {
     [token]
   );
 
+  // القيمة التي ستتوفر للمستهلكين (value object)
   const contextValue = {
     user,
     token,

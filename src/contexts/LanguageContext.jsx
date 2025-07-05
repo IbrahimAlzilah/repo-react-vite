@@ -13,10 +13,10 @@ export const LanguageContext = createContext(null);
 
 // 2. إنشاء مكون Provider
 export function LanguageProvider({ children }) {
-  // يمكننا محاولة جلب اللغة المفضلة من Local Storage
+  // يمكننا محاولة جلب اللغة المفضلة من Local Storage أو من تفضيلات المتصفح
   const [language, setLanguage] = useState(() => {
-    const savedLang = localStorage.getItem("app-lang");
-    return savedLang || "en"; // القيمة الافتراضية
+    const savedLang = localStorage.getItem("app-lang"); // 1. محاولة جلب اللغة المحفوظة
+    return savedLang || (navigator.language.startsWith("ar") ? "ar" : "en"); // القيمة الافتراضية
   });
 
   // استخدام useEffect لحفظ اللغة في Local Storage

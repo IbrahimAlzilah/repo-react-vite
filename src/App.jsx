@@ -1,16 +1,15 @@
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { LanguageProvider } from "./contexts/LanguageContext";
+import Providers from "./components/Providers";
 
 // routing
 import AppRoutes from "./routes";
 
+const direction = "rtl";
+
 function App() {
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <AppRoutes />
-      </LanguageProvider>
-    </ThemeProvider>
+    <Providers direction={direction}>
+      <AppRoutes />
+    </Providers>
   );
 }
 
