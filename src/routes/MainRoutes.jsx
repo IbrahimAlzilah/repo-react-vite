@@ -13,7 +13,7 @@ const UseRef = lazy(() => import("../pages/UseRef"));
 const UseContext = lazy(() => import("../pages/UseContext"));
 const MuiPage = lazy(() => import("../pages/MuiPage"));
 const ToDoList = lazy(() => import("../pages/ToDoList"));
-const UserProfile = lazy(() => import("../pages/UserProfile"));
+const UserProfile = lazy(() => import("../pages/Profile"));
 
 const LoadingFallback = () => (
   <Box sx={{ width: "100%", minHeight: "60vh", padding: 2 }}>

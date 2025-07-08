@@ -8,10 +8,14 @@
     "footerText": "بُني باستخدام React و Context API.",
     "using": "استخدام",
     "appName": "تطبيقي",
+    "save": "حـفظ",
+    "editUserProfile": "تعديل الملف الشخصي",
     "notFound": "لم يتم العثور على الصفحة",
     "auth": {
       "name": "الاسم",
       "username": "اسم المستخدم",
-      "password": "كلمة المرور"
+      "email": "البريد الالكتروني",
+      "password": "كلمة المرور",
+      "choiceFile": "اختيار ملف"
     }
   }

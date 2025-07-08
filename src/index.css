@@ -59,10 +59,14 @@ html {
   min-block-size: 100%;
 }
 
+* {
+  font-family: var(--font-primary), sans-serif !important;
+}
+
 body {
   color: inherit;
   margin: 0;
-  font-family: var(--font-primary), sans-serif;
+  /* font-family: var(--font-primary), sans-serif; */
   font-weight: 400;
   font-size: 0.9375rem;
   line-height: 1.46667;
@@ -88,6 +92,7 @@ body.dark {
 
 #root {
   /* max-width: 1280px; */
+  width: 100%;
   max-width: 720px;
   /* min-width: 320px; */
   overflow: hidden;
@@ -174,8 +179,8 @@ button:focus-visible {
 
 .main-content {
   padding: 20px;
-  min-height: 200px;
-  transition: background-color 0.3s, color 0.3s,
+  min-height: calc(100vh - 170px);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .card {
@@ -241,7 +246,7 @@ button:focus-visible {
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.375em;
+  gap: 0.125em;
   width: 100%;
   margin-bottom: 1rem;
 }
