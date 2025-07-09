@@ -1,11 +1,11 @@
 import React from "react";
-import Divider from "../components/ui/Divider";
+import CustomDivider from "../components/ui/CustomDivider";
 import TodoList from "../components/TodoList";
 
 const ToDoList = () => {
   return (
     <>
-    <Divider title={"تطبيق قائمة المهام"} />
+      <CustomDivider title={"تطبيق قائمة المهام"} />
       <TodoList />
     </>
   );

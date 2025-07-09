@@ -2,7 +2,7 @@ import { useContext } from "react";
 import useMetadata from "../hooks/useMetadata"; // استيراد الـ Custom Hook
 import { LanguageContext } from "../contexts/LanguageContext";
 import FocusInput from "../components/examples/FocusInput"; // استيراد مكون FocusInput
-import Divider from "../components/ui/Divider";
+import CustomDivider from "../components/ui/CustomDivider";
 
 function UseContextPage() {
   const { t } = useContext(LanguageContext);
@@ -11,7 +11,7 @@ function UseContextPage() {
 
   return (
     <>
-      <Divider title={t.using + " useContext"} />
+      <CustomDivider title={t.using + " useContext"} />
       <FocusInput />
     </>
   );

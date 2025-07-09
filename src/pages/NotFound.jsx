@@ -3,14 +3,14 @@ import useMetadata from "../hooks/useMetadata"; // استيراد الـ Custom 
 import { useContext } from "react";
 import { LanguageContext } from "../contexts/LanguageContext";
 
-import Card from "../components/ui/Card";
+import CustomCard from "../components/ui/CustomCard";
 
 function NotFoundPage() {
   const { t } = useContext(LanguageContext);
   useMetadata(`404 - Page Not Found | ${t.appName}`); // تعيين عنوان الصفحة
 
   return (
-    <Card className="text-center page-content">
+    <CustomCard className="text-center page-content">
       <h2 className="text-3xl font-bold mb-4 text-gray-800">
         404 - لم يتم العثور على الصفحة
       </h2>
@@ -21,7 +21,7 @@ function NotFoundPage() {
       >
         العودة إلى الرئيسية
       </Link>
-    </Card>
+    </CustomCard>
   );
 }
 export default NotFoundPage;

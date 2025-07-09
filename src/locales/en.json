@@ -8,10 +8,16 @@
   "footerText": "Built with React and Context API.",
   "using": "Using",
   "appName": "My App",
+  "save": "Save",
   "notFound": "Page Not Found",
   "auth": {
     "name": "name",
     "username": "user name",
+    "email": "Email",
     "password": "password"
-  }
+  },
+  "accountSettings": "Account settings",
+  "myProfile": "My Profile",
+  "myAccount": "My Account",
+  "logout": "Logout"
 }

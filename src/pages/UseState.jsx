@@ -4,7 +4,7 @@ import { LanguageContext } from "../contexts/LanguageContext";
 import TodoList from "../components/TodoList";
 import UserProfileEditor from "../components/UserProfileEditor";
 import SafeCounter from "../components/examples/SafeCounter"; // استيراد مكون SafeCounter
-import Divider from "../components/ui/Divider";
+import CustomDivider from "../components/ui/CustomDivider";
 
 function State() {
   const { t } = useContext(LanguageContext);
@@ -12,7 +12,7 @@ function State() {
 
   return (
     <>
-      <Divider title={t.using + " useState"} />
+      <CustomDivider title={t.using + " useState"} />
       <TodoList />
       <SafeCounter />
       <UserProfileEditor />

@@ -15,7 +15,7 @@ export function ThemeProvider({ children }) {
   // استخدام useEffect لحفظ السمة في Local Storage وتطبيقها على DOM
   useEffect(() => {
     localStorage.setItem("app-theme", theme);
-    document.body.className = theme;
+    // document.body.className = theme;
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]); // يُنفذ هذا الـ effect كلما تغيرت السمة
 

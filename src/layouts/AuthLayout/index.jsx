@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 // import UI components
-import Divider from "../../components/ui/Divider";
+import CustomDivider from "../../components/ui/CustomDivider";
 import LanguageDropdown from "../../components/LanguageDropdown";
 
 function AuthLayout() {
@@ -26,7 +26,7 @@ function AuthLayout() {
           <h2 className="text-xl">{t?.welcomeAuth || "Welcome"}</h2>
           <LanguageDropdown />
         </div>
-        <Divider />
+        <CustomDivider />
         <Outlet />
       </main>
     </div>

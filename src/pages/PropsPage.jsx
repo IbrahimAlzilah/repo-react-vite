@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 import useMetadata from "../hooks/useMetadata"; // استيراد الـ Custom Hook
 import { LanguageContext } from "../contexts/LanguageContext";
 import DisplayInfo from "../components/examples/DisplayInfo"; // استيراد مكون DisplayInfo
-import Card from "../components/ui/Card";
-import Button from "../components/ui/Button";
-import Divider from "../components/ui/Divider";
+import CustomCard from "../components/ui/CustomCard";
+import CustomButton from "../components/ui/CustomButton";
+import CustomDivider from "../components/ui/CustomDivider";
 
 function Props() {
   const [active, setActive] = useState(true);
@@ -40,41 +40,41 @@ function Props() {
 
   return (
     <>
-      <Divider title={t.using + " props"} />
-      <Card title={message} className="text-center">
+      <CustomDivider title={t.using + " props"} />
+      <CustomCard title={message} className="text-center">
         <div className="flex items-center justify-center gap-2">
-          <Button text="تحية" onClick={changeToGreeting} />
-          <Button text="وداع" onClick={changeToFarewell} />
-          <Button
-            text="إعادة تعيين"
+          <CustomButton text="تحية" onClick={changeToGreeting} />
+          <CustomButton text="وداع" onClick={changeToFarewell} />
+          <CustomButton
+            text="إعادة تعيين" color="var(--danger-color)"
             onClick={() => setMessage("الوضع الافتراضي")}
           />
         </div>
-      </Card>
+      </CustomCard>
 
-      <Card title="بطاقة المنتج" className="text-center">
+      <CustomCard title="بطاقة المنتج" className="text-center">
         <img className="product-image" src="./cole.webp" alt="منتج" />
         <p className="py-2">
           وصف المنتج هنا. سعر: <b>$29.99</b>
         </p>
         <div className="flex items-center justify-center gap-2">
-          <Button text="أضف إلى السلة" color="blue" />
-          <Button
+          <CustomButton text="أضف إلى السلة" color="var(--primary-color)" />
+          <CustomButton
             text={`(+) : ${count}`}
             onClick={() => setCount((count) => count + 1)}
           />
-          <Button text={`(-) : ${count}`} onClick={decrement} />
+          <CustomButton text={`(-) : ${count}`} onClick={decrement} />
         </div>
-      </Card>
+      </CustomCard>
 
-      <Card className="text-center">
+      <CustomCard className="text-center">
         <h3>بطاقة بدون عنوان</h3>
         <p>هذا مجرد نص.</p>
         <ul>
           <li>عنصر 1</li>
           <li>عنصر 2</li>
         </ul>
-      </Card>
+      </CustomCard>
 
       <DisplayInfo
         title="معلومات المنتج"
@@ -91,7 +91,7 @@ function Props() {
         isActive={active} // منطقي
         // لم يتم تمرير 'details' و 'onReset' هنا، وهما اختياريان
       />
-      {/* <Greeting user={userData} onButtonClick={handleShowDetails} /> */}
+      {/* <Greeting user={userData} onCustomCustomButtonClick={handleShowDetails} /> */}
     </>
   );
 }

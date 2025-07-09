@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Card from "../ui/Card";
-import Button from "../ui/Button";
+import CustomCard from "../ui/CustomCard";
+import CustomButton from "../ui/CustomButton";
 
 function SafeCounter() {
   const [count, setCount] = useState(0);
@@ -24,12 +24,12 @@ function SafeCounter() {
   };
 
   return (
-    <Card title={`العداد الآمن: ${count}`}>
+    <CustomCard title={`العداد الآمن: ${count}`}>
       <div className="flex items-center justify-center gap-2">
-        <Button text="زيادة بـ 1" onClick={incrementByOne} />
-        <Button text="زيادة بـ 5 (بشكل آمن)" onClick={incrementByFive} />
+        <CustomButton text="زيادة بـ 1" onClick={incrementByOne} />
+        <CustomButton text="زيادة بـ 5 (بشكل آمن)" onClick={incrementByFive} />
       </div>
-    </Card>
+    </CustomCard>
   );
 }
 

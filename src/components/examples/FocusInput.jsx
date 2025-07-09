@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import Card from "../ui/Card";
-import Button from "../ui/Button";
+import CustomCard from "../ui/CustomCard";
+import CustomButton from "../ui/CustomButton";
 
 function FocusInput() {
   const inputRef = useRef(null); // 1. إنشاء Ref باستخدام useRef
@@ -12,13 +12,13 @@ function FocusInput() {
   };
 
   return (
-    <Card title="تركيز على حقل الإدخال" className="text-center">
+    <CustomCard title="تركيز على حقل الإدخال" className="text-center">
       {/* 3. ربط الـ ref بالعنصر */}
       <div className="form-group">
         <input type="text" ref={inputRef} />
       </div>
-      <Button text="تركيز على حقل الإدخال وتغيير لونه" onClick={handleClick} />
-    </Card>
+      <CustomButton text="تركيز على حقل الإدخال وتغيير لونه" onClick={handleClick} />
+    </CustomCard>
   );
 }
 

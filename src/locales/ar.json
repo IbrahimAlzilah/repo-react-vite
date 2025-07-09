@@ -17,5 +17,9 @@
       "email": "البريد الالكتروني",
       "password": "كلمة المرور",
       "choiceFile": "اختيار ملف"
-    }
+    },
+    "accountSettings": "إعدادات الحساب",
+    "myProfile": "ملفي الشخصي",
+    "myAccount": "حسابي",
+    "logout": "تسجيل الخروج"
   }

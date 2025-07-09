@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/auth";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import useMetadata from "../../hooks/useMetadata";
 
-import Card from "../../components/ui/Card";
-import Button from "../../components/ui/Button";
-import Divider from "../../components/ui/Divider";
+import CustomCard from "../../components/ui/CustomCard";
+import CustomButton from "../../components/ui/CustomButton";
+import CustomDivider from "../../components/ui/CustomDivider";
 import CustomSnackbar, { initSnackbar } from "../../components/CustomSnackbar";
 
 import axios from "axios";
@@ -79,7 +79,7 @@ const LoginPage = () => {
 
       // Save to context and localStorage
       const loginSuccess = login(response.data);
-      
+
       if (loginSuccess) {
         // Reset form
         setForm(initialForm);
@@ -95,11 +95,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       const message = error?.response?.data?.message || "حدث خطأ أثناء تسجيل الدخول";
-      setSnackbar({
-        open: true,
-        message,
-        severity: "error",
-      });
+      setSnackbar({ open: true, message, severity: "error"});
     } finally {
       setLoading(false);
     }
@@ -111,7 +107,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Card title="تسجيل الدخول" className="text-center">
+    <CustomCard title="تسجيل الدخول" className="text-center">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <input
           type="text"
@@ -133,17 +129,16 @@ const LoginPage = () => {
           className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         {error && <small className="text-red-500 text-sm">{error}</small>}
-        <Button
+        <CustomButton
           type="submit"
           className="w-full"
-          fullWidth
           variant="contained"
           disabled={loading}
         >
           {loading ? "جاري التسجيل..." : "تسجيل الدخول"}
-        </Button>
+        </CustomButton>
       </form>
-      <Divider />
+      <CustomDivider />
       <NavLink
         to="/register"
         className="text-blue-600 text-sm hover:underline transition-colors"
@@ -156,7 +151,7 @@ const LoginPage = () => {
         severity={snackbar.severity}
         onClose={handleSnackbarClose}
       />
-    </Card>
+    </CustomCard>
   );
 };
 

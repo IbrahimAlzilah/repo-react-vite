@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import Card from "../ui/Card";
-import Button from "../ui/Button";
+import CustomCard from "../ui/CustomCard";
+import CustomButton from "../ui/CustomButton";
 
 function TimerControl() {
   const [isRunning, setIsRunning] = useState(false);
@@ -30,13 +30,13 @@ function TimerControl() {
   };
 
   return (
-    <Card title={`العداد: ${seconds} ثانية`} className="text-center">
+    <CustomCard title={`العداد: ${seconds} ثانية`} className="text-center">
       <div className="flex items-center justify-center gap-2">
-        <Button text="بدء" onClick={startTimer} disabled={isRunning} />
-        <Button text="إيقاف" onClick={stopTimer} disabled={!isRunning} />
-        <Button text="إعادة تعيين" onClick={resetTimer} />
+        <CustomButton text="بدء" onClick={startTimer} disabled={isRunning} />
+        <CustomButton text="إيقاف" onClick={stopTimer} disabled={!isRunning} />
+        <CustomButton text="إعادة تعيين" onClick={resetTimer} />
       </div>
-    </Card>
+    </CustomCard>
   );
 }
 

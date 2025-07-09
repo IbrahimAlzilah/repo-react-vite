@@ -4,7 +4,7 @@ import useMetadata from "../../hooks/useMetadata";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { useAuth } from "../../contexts/auth";
 
-import Card from "../../components/ui/Card";
+import CustomCard from "../../components/ui/CustomCard";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import axios from "axios";
@@ -86,7 +86,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <Card title="إنشاء حساب" className="text-center">
+    <CustomCard title="إنشاء حساب" className="text-center">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <input
           type="text"
@@ -119,14 +119,13 @@ const RegisterPage = () => {
         <Button
           type="submit"
           className="w-full"
-          fullWidth
           variant="contained"
           disabled={loading}
         >
           {loading ? "جاري الإنشاء..." : "إنشاء حساب"}
         </Button>
       </form>
-      <Divider />
+      <Divider sx={{ my: 2 }} />
       <NavLink
         to="/login"
         className="text-blue-600 text-sm hover:underline transition-colors"
@@ -139,7 +138,7 @@ const RegisterPage = () => {
         severity={snackbar.severity}
         onClose={handleSnackbarClose}
       />
-    </Card>
+    </CustomCard>
   );
 };
 

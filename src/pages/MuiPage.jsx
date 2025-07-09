@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
 import useMetadata from "../hooks/useMetadata";
 import { LanguageContext } from "../contexts/LanguageContext";
-import {Box, IconButton, Tooltip } from "@mui/material";
-import Divider from "../components/ui/Divider";
-import Card from "../components/ui/Card";
+import { Box, IconButton, Tooltip } from "@mui/material";
+import CustomDivider from "../components/ui/CustomDivider";
+import CustomCard from "../components/ui/CustomCard";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TestSkeleton from "../components/mui/TestSkeleton";
 
@@ -22,8 +22,8 @@ const MuiPage = () => {
 
   return (
     <>
-      <Divider title={t.using + " skeleton"} />
-      <Card title={t.using + " Skeleton"}>
+      <CustomDivider title={t.using + " skeleton"} />
+      <CustomCard title={t.using + " Skeleton"}>
         <Box className="flex items-center justify-center text-center gap-4 mb-5">
           <MUI />
           <DialogTest />
@@ -37,7 +37,7 @@ const MuiPage = () => {
           </CustomDialog>
         </Box>
         <TestSkeleton />
-      </Card>
+      </CustomCard>
     </>
   );
 };

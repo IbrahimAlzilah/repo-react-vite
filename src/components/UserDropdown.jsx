@@ -1,142 +1,162 @@
-import { useRef, useState, useContext } from "react";
+import { useRef, useState, useContext, useMemo } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/auth";
-import { LanguageContext } from "../contexts/LanguageContext";
+
+// MUI Imports
 import {
   Tooltip,
   IconButton,
   Avatar,
-  Menu,
+  Popper,
+  Fade,
+  ClickAwayListener,
+  MenuList,
   MenuItem,
   Divider,
+  Typography,
+  Paper, // Import Paper for the Popper content
 } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import Logout from "@mui/icons-material/Logout";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+
+// Hook Imports
+import { useAuth } from "../contexts/auth";
+import { LanguageContext } from "../contexts/LanguageContext";
 
 const UserDropdown = () => {
-  // States
-  // const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  // State
+  const [open, setOpen] = useState(false); // control the Popper's open/close state
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
-  // Refs
-  // const anchorRef = useRef(null);
+  // Ref to anchor the Popper to the IconButton
+  const anchorRef = useRef(null);
 
   // Hooks
   const { language } = useContext(LanguageContext);
-  const { getCurrentUser } = useAuth();
+  const { getCurrentUser, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const open = Boolean(anchorEl);
+  // Get current user details using useMemo for performance
+  const currentUser = useMemo(() => getCurrentUser(), [getCurrentUser]);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (event, url) => {
+  // Handle closing the Popper. It can be triggered by a click away or a menu item selection.
+  const handleClose = (event, url = null) => {
     if (url) {
       navigate(url);
     }
-    // if (anchorRef.current && anchorRef.current.contains(event?.target)) {
-    //   return;
-    // }
-    setAnchorEl(null);
+
+    // Prevent closing if the click is on the anchor element itself
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    
+    setOpen(false);
+    setTooltipOpen(false);
   };
 
-  const { logout } = useAuth();
-  const navigate = useNavigate();
+  // Handle toggling the Popper's open state
+  const handleToggle = () => {
+    // !open ? setOpen(true) : setOpen(false)
+    setOpen((prevOpen) => !prevOpen);
+  };
 
+  // Handle user logout
   const handleLogout = () => {
-    logout(); // Clear user and localStorage
+    logout(); // Clear user session and local storage
     navigate("/login"); // Redirect to login page
   };
 
-  // Get first letter of user's name
-  const getFirstLetter = () => {
-    const userName = getCurrentUser()?.name || "";
-    return userName.charAt(0).toUpperCase();
-  };
+  // Get the first letter of the user's name or a default character
+  const getFirstLetter = useMemo(() => {
+    return currentUser?.name ? currentUser.name.charAt(0).toUpperCase() : "?";
+  }, [currentUser]);
 
   return (
     <>
-      <Tooltip title="Account settings">
-        <IconButton
-          onClick={handleClick}
-          size="small"
-          aria-controls={open ? "account-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-        >
+      <Tooltip
+        title="Account settings"
+        onOpen={() => setTooltipOpen(true)}
+        onClose={() => setTooltipOpen(false)}
+        open={open ? false : tooltipOpen ? true : false}
+        slotProps={{ popper: { className: "capitalize" } }}
+      >
+        <IconButton ref={anchorRef} onClick={handleToggle} size="small">
           <Avatar
             sx={{
               bgcolor: deepOrange[500],
               width: 32,
               height: 32,
               fontSize: "1rem",
+              fontWeight: "normal",
             }}
+            alt={currentUser?.name || "User"}
           >
-            {getFirstLetter()}
+            {getFirstLetter}
           </Avatar>
         </IconButton>
       </Tooltip>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
+      <Popper
         open={open}
-        onClose={handleClose}
-        // slotProps={{
-        //   list: {
-        //     "aria-labelledby": "basic-button",
-        //   },
-        // }}
-        slotProps={{
-          paper: {
-            elevation: 0,
-            sx: {
-              overflow: "visible",
-              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-              mt: 1.5,
-              "& .MuiAvatar-root": {
-                width: 32,
-                height: 32,
-                ml: 1,
-                mr: -0.5,
-              },
-              "&::before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: 0,
-                insetInlineEnd: 14,
-                width: 10,
-                height: 10,
-                bgcolor: "background.paper",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          },
-        }}
-        transformOrigin={{
-          horizontal: language === "ar" ? "left" : "right",
-          vertical: "top",
-        }}
-        anchorOrigin={{
-          horizontal: language === "ar" ? "left" : "right",
-          vertical: "bottom",
-        }}
+        anchorEl={anchorRef.current}
+        transition
+        disablePortal
+        placement={language === "ar" ? "bottom-start" : "bottom-end"}
+        className="min-is-[240px] !mt-3 z-[1]" // Consider using sx prop for Material-UI styles
+        // sx={{ minWidth: 240, mt: 1.5, zIndex: 1 }} // Equivalent using sx
       >
-        <MenuItem onClick={(e) => handleClose(e, "user-profile")}>
-          <Avatar /> My Profile
-        </MenuItem>
-        <MenuItem onClick={(e) => handleClose(e)}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleLogout}>
-          <Logout fontSize="small" sx={{ ml: 1 }} /> Logout
-        </MenuItem>
-      </Menu>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps}>
+            <Paper
+              elevation={0}
+              sx={{
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+              }}
+            >
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  autoFocusItem={open} // Focus the first item when opened
+                  onKeyDown={handleClose}
+                >
+                  {currentUser && (
+                    <div className="flex items-center ps-3 pe-3 gap-2" tabIndex={-1}>
+                      <Avatar alt="Profile" src="/images/avatars/1.png" />
+                      <div className="flex items-start flex-col">
+                        <Typography className="font-medium" color="text.primary">
+                          {currentUser.name}
+                        </Typography>
+                        <Typography variant="caption">
+                          {(currentUser?.email && currentUser.email) || "admin@smart.com"}
+                        </Typography>
+                      </div>
+                    </div>
+                  )}
+                  {(currentUser || currentUser?.email) && <Divider sx={{ my: 0.5 }} />}
+                  {/* Add divider if user info is present */}
+                  <MenuItem onClick={(e) => handleClose(e, "user-profile")}>
+                    <AccountCircleOutlinedIcon className="me-1" /> My Profile
+                  </MenuItem>
+                  <MenuItem onClick={(e) => handleClose(e, "account-settings")}>
+                    <SettingsOutlinedIcon className="me-1" /> My Account
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={handleLogout}>
+                    <Logout className="me-1" /> Logout
+                  </MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
     </>
   );
+};
+
+UserDropdown.propTypes = {
+  loading: PropTypes.bool,
 };
 
 export default UserDropdown;

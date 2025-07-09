@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Card from "./ui/Card";
-import Button from "./ui/Button";
+import CustomCard from "./ui/CustomCard";
+import CustomButton from "./ui/CustomButton";
+import { Divider } from "@mui/material";
 
 const restored = (
   <svg
@@ -46,10 +47,10 @@ function UserProfileEditor() {
 
   return (
     <>
-      <Card
+      <CustomCard
         title="تعديل ملف المستخدم"
         action={
-          <Button
+          <CustomButton
             text={restored}
             icon={restored}
             onClick={() => setUser(userData)}
@@ -77,13 +78,13 @@ function UserProfileEditor() {
           <label>البريد الإلكتروني</label>
           <input type="email" value={user.email} onChange={handleEmailChange} />
         </div>
-        <hr />
+        <Divider />
         <h3 className="mt-2">البيانات الحالية:</h3>
         <p>
           الاسم: {user.firstName} {user.lastName}
         </p>
         <p>البريد الإلكتروني: {user.email}</p>
-      </Card>
+      </CustomCard>
     </>
   );
 }

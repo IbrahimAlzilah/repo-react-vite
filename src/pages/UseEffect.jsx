@@ -4,9 +4,9 @@ import { LanguageContext } from "../contexts/LanguageContext";
 import UserProfile from "../components/UserProfile";
 import MouseTracker from "../components/examples/MouseTracker"; // استيراد مكون MouseTracker
 import Timer from "../components/Timer";
-import Card from "../components/ui/Card";
-import Button from "../components/ui/Button";
-import Divider from "../components/ui/Divider";
+import CustomCard from "../components/ui/CustomCard";
+import CustomButton from "../components/ui/CustomButton";
+import CustomDivider from "../components/ui/CustomDivider";
 
 function UseEffect() {
   // Sate
@@ -19,28 +19,28 @@ function UseEffect() {
 
   return (
     <>
-      <Divider title={t.using + " useEffect"} />
-      <Card title="المؤقت">
+      <CustomDivider title={t.using + " useEffect"} />
+      <CustomCard title="المؤقت">
         <Timer />
-      </Card>
-      <Card title="متتبع حركة الفأرة" className={"text-center"}>
-        <Button
+      </CustomCard>
+      <CustomCard title="متتبع حركة الفأرة" className={"text-center"}>
+        <CustomButton
           text={showTracker ? "إخفاء متتبع الفأرة" : "إظهار متتبع الفأرة"}
           className="text-sm"
           onClick={() => setShowTracker(!showTracker)}
         />
 
         {showTracker && <MouseTracker />}
-      </Card>
+      </CustomCard>
 
-      <Card title="تطبيق جلب المستخدمين">
+      <CustomCard title="تطبيق جلب المستخدمين">
         <div className="flex items-center justify-center gap-2 mb-2">
-          <Button
+          <CustomButton
             text={`التالي (${currentUserId + 1})`}
             onClick={() => setCurrentUserId((prevId) => prevId + 1)}
           />
 
-          <Button
+          <CustomButton
             text={`السابق (${currentUserId - 1})`}
             className={`${
               currentUserId === 1 ? "opacity-50 cursor-not-allowed" : ""
@@ -51,7 +51,7 @@ function UseEffect() {
           />
         </div>
         <UserProfile userId={currentUserId} />
-      </Card>
+      </CustomCard>
     </>
   );
 }

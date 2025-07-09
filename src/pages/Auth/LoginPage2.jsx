@@ -5,7 +5,7 @@ import useMetadata from "../../hooks/useMetadata";
 import { LanguageContext } from "../../contexts/LanguageContext";
 
 import Card from "../../components/ui/Card";
-import Button from "../../components/ui/Button";
+import CustomButton from "../../components/ui/CustomButton";
 import Divider from "../../components/ui/Divider";
 
 import axios from "axios";
@@ -96,15 +96,14 @@ const LoginPage = () => {
             className="border rounded px-3 py-2"
           />
           {error && <small className="text-red-500">{error}</small>}
-          <Button
+          <CustomButton
             type="submit"
             className="w-full"
-            fullWidth
             variant="contained"
             disabled={loading}
           >
             {loading ? "جاري التسجيل..." : "تسجيل الدخول"}
-          </Button>
+          </CustomButton>
         </form>
         <Divider />
         <NavLink

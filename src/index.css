@@ -1,6 +1,18 @@
 @import "tailwindcss";
 
-/* Expo Arabic Font */
+/*
+  ----------------------------------------------------
+  1. Custom Fonts
+  ----------------------------------------------------
+*/
+@font-face {
+  font-family: 'Expo Arabic';
+  src: url('./assets/fonts/ExpoArabic-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Expo Arabic';
   src: url('./assets/fonts/ExpoArabic-Book.ttf') format('truetype');
@@ -25,54 +37,142 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Expo Arabic';
-  src: url('./assets/fonts/ExpoArabic-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
+/*
+  ----------------------------------------------------
+  2. Root Variables (Default/Common Properties)
+  ----------------------------------------------------
+*/
+:root {
+  /* Font Family */
+  --font-primary: 'Expo Arabic', system-ui, -apple-system, sans-serif;
+
+  /* Common Colors (Theme-independent) */
+  --blue: #00579F;
+  --blue-dark: #004b87;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+  --success-color: #22c55e;
+  --info-color: #3b82f6;
+
+  /* Default Theme Specific Variables (Light Theme defaults) */
+  --primary-color: var(--blue);
+  --primary-hover: var(--blue-dark);
+  --primary-rgb: var(--blue-rgb);
 }
 
-/* Default font variables */
-:root {
-  --font-primary: 'Expo Arabic', system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
+/*
+  ----------------------------------------------------
+  3. Theme Definitions
+  ----------------------------------------------------
+  Define specific variables for light, dark, and system themes.
+*/
+
+/* Light Theme */
+html[data-theme="light"] {
+  /* Variables (Light Theme defaults) */
+  --text-color: #333333;
+  --text-muted: #6c757d;
+  --bg-body: #f1f3f6;
+  --bg-color: #ffffff;
+  --bg-field: #f8f9fa;
+  /* --border-color: #E5E7EB; */
+  --border-color: #ccc;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --white: #ffffff;
+  --black: #000000;
+}
+
+/* Dark Theme */
+html[data-theme="dark"] {
+  /* Variables (Dark Theme defaults) */
+  --text-color: #e0e0e0;
+  --text-muted: #9e9e9e;
+  --bg-body: #121212;
+  --bg-color: #1e1e1e;
+  --bg-field: #333333;
+  /* --border-color: #444444; */
+  --border-color: #333333;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --white: #f8f9fa;
+  --black: #121212;
+}
+
+/* System Theme Detection via Media Query */
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] {
+    /* Inherit dark theme variables */
+    --text-color: #e0e0e0;
+    --text-muted: #9e9e9e;
+    --bg-body: #121212;
+    --bg-color: #1e1e1e;
+    --bg-field: #333333;
+    --border-color: #333333;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+    --white: #f8f9fa;
+    --black: #121212;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html[data-theme="system"] {
+    /* Inherit light theme variables (already set in :root as defaults) */
+    /* You could explicitly redefine them here for clarity if you wish,
+       but it's redundant if the :root values are your light theme defaults. */
+    --text-color: #333333;
+    --text-muted: #6c757d;
+    --bg-body: #121212;
+    --bg-color: #1e1e1e;
+    --bg-field: #f8f9fa;
+    --border-color: #E5E7EB;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --white: #ffffff;
+    --black: #000000;
+  }
+}
+
+/*
+  ----------------------------------------------------
+  4. Global HTML & Body Styling
+  ----------------------------------------------------
+  Ensure proper layout and basic typography.
+*/
+html {
+  block-size: 100%;
+  /* Use block-size for vertical height */
+  inline-size: 100%;
+  /* Use inline-size for horizontal width */
+  min-block-size: 100%;
+  display: flex;
+  /* Helps ensure body stretches */
+  background-color: var(--bg-body);
+}
+
+/* Base body styles, inheriting theme colors */
+body {
+  margin: 0;
+  font-family: var(--font-primary), sans-serif;
   font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.46667;
+  color: var(--text-color);
+  /* Inherit text color from theme */
+  background-color: var(--bg-body);
+  /* Inherit background from theme */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+  transition: background-color 0.3s ease, color 0.3s ease;
 
-/* Dark Theme */
-html[data-theme="light"] {
-  background-color: #fff;
-}
-
-html[data-theme="dark"] {
-  background-color: #242424;
-}
-
-html {
-  display: flex;
-  inline-size: 100%;
-  min-block-size: 100%;
-}
-
-* {
-  font-family: var(--font-primary), sans-serif !important;
-}
-
-body {
-  color: inherit;
-  margin: 0;
-  /* font-family: var(--font-primary), sans-serif; */
-  font-weight: 400;
-  font-size: 0.9375rem;
-  line-height: 1.46667;
-  transition: background-color 0.3s, color 0.3s;
-
-  /* test Custom css */
+  /* Global flex layout for full page apps */
   display: flex;
   inline-size: 100%;
   min-block-size: 100%;
@@ -80,22 +180,31 @@ body {
   flex-direction: column;
 }
 
-body.light {
-  background-color: #f1f3f6;
-  color: #333 !important;
+/*
+  ----------------------------------------------------
+  5. General Utilities / Overrides
+  ----------------------------------------------------
+*/
+
+/* Apply primary font to all elements (use with caution, can override Tailwind) */
+* {
+  font-family: var(--font-primary), sans-serif !important;
+  /* The !important is strong, consider if truly needed globally */
 }
 
-body.dark {
-  background-color: #1a1a1a;
-  color: #f0f0f0 !important;
+/* Example: A custom focus outline for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
+/* End Test Custom Css */
 #root {
   /* max-width: 1280px; */
   width: 100%;
   max-width: 720px;
   /* min-width: 320px; */
-  overflow: hidden;
+  /* overflow: hidden; */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -110,10 +219,8 @@ button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
-  font-size: .875em;
+  font-size: .75em;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -131,24 +238,9 @@ button:focus-visible {
   color: #f0f0f0 !important;
 }
 
-[data-theme="dark"] button {
+/* [data-theme="dark"] button {
   color: #f0f0f0;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
-}
+} */
 
 .header {
   position: sticky;
@@ -157,9 +249,10 @@ button:focus-visible {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  color: #f0f0f0;
+  color: var(--text-color);
+  background-color: var(--bg-color);
   border-radius: 8px 8px 0 0;
-  border: 1px solid transparent;
+  border: 1px solid var(--border-color);
   z-index: 999;
   transition: background-color 0.3s, color 0.3s;
 }
@@ -169,31 +262,36 @@ button:focus-visible {
   transition: color 0.3s;
 
   &:hover {
-    color: #646cff;
+    color: var(--primary-hover);
   }
 
   &.active {
-    color: #6970ff;
+    color: var(--primary-color);
   }
 }
 
 .main-content {
+  color: var(--text-color);
+  background-color: var(--bg-body);
+  border-inline: 1px solid var(--border-color);
   padding: 20px;
   min-height: calc(100vh - 170px);
   transition: background-color 0.3s, color 0.3s;
 }
 
 .card {
-  border: 1px solid #444;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.25em;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: .5em;
   width: 100%;
   height: auto;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.25em;
 }
 
 .card-header {
@@ -202,11 +300,16 @@ button:focus-visible {
   width: 100%;
   padding: .5rem .75rem;
   background-color: inherit;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card:not(.text-center) {
+  text-align: start;
 }
 
 .card-title {
   font-size: 1.25em;
+  font-weight: 500;
 }
 
 .card-body {
@@ -214,14 +317,6 @@ button:focus-visible {
   width: 100%;
   padding: 1em;
   font-size: 1.2em;
-}
-
-.card-body:not(.text-center) {
-  text-align: start;
-}
-
-[data-theme="light"] :where(.card, .card-header) {
-  border-color: #ccc;
 }
 
 .product-image {
@@ -257,30 +352,63 @@ button:focus-visible {
   font-weight: 600;
 }
 
-input {
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea,
+.form-control {
   width: 100%;
   padding: 0.25rem 0.5rem;
-  border: 1px solid #ccc;
+  background-color: var(--bg-field);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: .9em;
   box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-input:focus {
+:where(input:not([type="checkbox"]):not([type="radio"]), select, textarea, .form-control):focus-visible {
+  border-color: var(--primary-color);
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+:where(input:not([type="checkbox"]):not([type="radio"]), select, textarea, .form-control):focus:not(:focus-visible) {
+  outline: none;
+}
+
+:where(input, select, textarea, .form-control):focus {
   border-color: #646cff;
   outline: none;
 }
 
-input::placeholder {
-  color: #999;
+input::placeholder,
+.form-control::placeholder {
+  /* color: #999999; */
+  color: var(--text-muted);
+  opacity: 1;
 }
 
-.divider {
-  border-bottom: 1px solid #444;
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: var(--theme-disabled-bg);
+  cursor: not-allowed;
+  opacity: 0.8;
 }
 
-[data-theme="light"] .divider {
-  border-color: #ccc;
+select.form-control {
+  padding-right: 2.5rem;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%236c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+.divider-root {
+  position: relative;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .cursor-not-allowed {
@@ -334,6 +462,6 @@ input::placeholder {
 }
 
 .css-1rju2q6-MuiButtonBase-root-MuiMenuItem-root a.active {
-  color: #535ad7;
+  color: var(--primary-color);
   font-weight: 600;
 }

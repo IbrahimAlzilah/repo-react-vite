@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import Card from "../ui/Card";
-import Button from "../ui/Button";
+import CustomCard from "../ui/CustomCard";
+import CustomButton from "../ui/CustomButton";
 
 function PreviousValueDisplay() {
   const [count, setCount] = useState(0);
@@ -19,10 +19,10 @@ function PreviousValueDisplay() {
   }); // لا توجد مصفوفة تبعيات: يُنفذ بعد كل عرض
 
   return (
-    <Card title={`العداد: ${count}`} className="text-center">
-      <Button onClick={() => setCount(count + 1)}>زيادة العداد</Button>
+    <CustomCard title={`العداد: ${count}`} className="text-center">
+      <CustomButton onClick={() => setCount(count + 1)}>زيادة العداد</CustomButton>
       <p className="mt-3">القيمة السابقة (المُخزنة): {prevCountRef.current}</p>
-    </Card>
+    </CustomCard>
   );
 }
 

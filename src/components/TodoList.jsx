@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Card from "./ui/Card";
-import Button from "./ui/Button";
+import CustomCard from "./ui/CustomCard";
+import CustomButton from "./ui/CustomButton";
 
 const plus = (
   <svg
@@ -85,7 +85,7 @@ function TodoList() {
   };
 
   return (
-    <Card title="قائمة المهام">
+    <CustomCard title="قائمة المهام">
       <div className="flex items-center justify-between gap-2 mb-3">
         <input
           type="text"
@@ -93,7 +93,7 @@ function TodoList() {
           onChange={(e) => setNewTodoText(e.target.value)}
           placeholder="أضف مهمة جديدة..."
         />
-        <Button text={plus} onClick={addTodo} />
+        <CustomButton text={plus} onClick={addTodo} />
       </div>
       <ul>
         {todos.map((todo) => (
@@ -106,11 +106,11 @@ function TodoList() {
           >
             {todo.text}
             <div className="flex items-center gap-2">
-              <Button
+              <CustomButton
                 text={todo.completed ? "إلغاء" : "إكمال"}
                 onClick={() => toggleTodoComplete(todo.id)}
               />
-              <Button
+              <CustomButton
                 text={trash}
                 className="text-red-500"
                 color="var(--color-red-200)"
@@ -120,7 +120,7 @@ function TodoList() {
           </li>
         ))}
       </ul>
-    </Card>
+    </CustomCard>
   );
 }
 

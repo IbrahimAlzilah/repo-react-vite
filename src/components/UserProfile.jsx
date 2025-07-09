@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Card from "./ui/Card";
+import CustomCard from "./ui/CustomCard";
 
-function metadata(title) { 
-   document.title = title;
+function metadata(title) {
+  document.title = title;
 }
 
 function UserProfile({ userId }) {
@@ -49,11 +49,11 @@ function UserProfile({ userId }) {
   }
 
   return (
-    <Card title={`معلومات المستخدم ${userId}`}>
+    <CustomCard title={`معلومات المستخدم ${userId}`}>
       <p>الاسم: {user.name}</p>
       <p>البريد الإلكتروني: {user.email}</p>
       <p>الهاتف: {user.phone}</p>
-    </Card>
+    </CustomCard>
   );
 }
 

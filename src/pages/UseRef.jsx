@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { LanguageContext } from "../contexts/LanguageContext";
 import PreviousValueDisplay from "../components/examples/PreviousValueDisplay"; // استيراد مكون PreviousValueDisplay
 import TimerControl from "../components/examples/TimerControl"; // استيراد مكون TimerControl
-import Divider from "../components/ui/Divider";
+import CustomDivider from "../components/ui/CustomDivider";
 
 function UseRefPage() {
   const { t } = useContext(LanguageContext);
@@ -11,7 +11,7 @@ function UseRefPage() {
 
   return (
     <>
-      <Divider title={t.using + " useRef"} />
+      <CustomDivider title={t.using + " useRef"} />
       <PreviousValueDisplay />
       <TimerControl />
     </>
