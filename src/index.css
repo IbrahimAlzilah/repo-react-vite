@@ -380,7 +380,7 @@ textarea,
 }
 
 :where(input, select, textarea, .form-control):focus {
-  border-color: #646cff;
+  border-color: var(--primary-color) !important;
   outline: none;
 }
 
@@ -464,4 +464,25 @@ select.form-control {
 .css-1rju2q6-MuiButtonBase-root-MuiMenuItem-root a.active {
   color: var(--primary-color);
   font-weight: 600;
+}
+
+.btn-icon:not(.success) {
+  color: var(--success-color) !important;
+}
+
+.btn-icon.success {
+  color: var(--success-color) !important;
+}
+
+.btn-icon:focus {
+  outline: 0 !important;
+}
+
+/* .btn-icon {
+  @apply bg-green-600 text-white
+} */
+
+.TooltipSpan {
+  display: inline-block;
+  cursor: not-allowed;
 }

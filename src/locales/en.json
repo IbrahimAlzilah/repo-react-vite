@@ -9,6 +9,13 @@
   "using": "Using",
   "appName": "My App",
   "save": "Save",
+  "edit": "Edit",
+  "delete": "Delete",
+  "add": "Add",
+  "completed": "Completed",
+  "incomplete": "Incomplete",
+  "todoList": "Todo List",
+  "addTodo": "Add Todo",
   "notFound": "Page Not Found",
   "auth": {
     "name": "name",

@@ -21,7 +21,7 @@ const CustomSnackbar = ({
   severity = "success",
   autoHideDuration = 4000,
   onClose,
-  anchorOrigin = { vertical: "top", horizontal: "right" },
+  anchorOrigin = { vertical: "bottom", horizontal: "right" },
   dir = "ltr",
 }) => (
   <Snackbar

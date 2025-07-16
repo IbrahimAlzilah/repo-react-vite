@@ -9,6 +9,13 @@
     "using": "استخدام",
     "appName": "تطبيقي",
     "save": "حـفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "add": "إضافة",
+    "completed": "مكتمله",
+    "incomplete": "غير مكتمله",
+    "todoList": "قائمة المهام",
+    "addTodo": "إضافة مهمة",
     "editUserProfile": "تعديل الملف الشخصي",
     "notFound": "لم يتم العثور على الصفحة",
     "auth": {
