@@ -6,64 +6,65 @@ import DialogHeader from "../mui/dialogs/DialogHeader";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+
+// Components Imports
 import CustomSnackbar, { initSnackbar } from "../CustomSnackbar";
 
-function EditTodo({ onClose, todo, onUpdate }) {
+// Vars
+// Initialize with null or empty if todo is not yet available
+const initialData = {
+  id: null,
+  text: "",
+  details: "",
+  completed: false,
+  createdAt: "",
+};
+
+function EditTodo({ todo, onClose, onUpdate }) {
   // States
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState(initSnackbar);
-  const [form, setForm] = useState({
-    // Initialize with null or empty if todo is not yet available
-    id: todo?.id || null,
-    text: todo?.text || "",
-    completed: todo?.completed || false,
-  });
+  const [formData, setFormData] = useState(initialData);
   const [error, setError] = useState("");
 
-  // State
+  // Hooks
   const { t } = useContext(LanguageContext);
 
-  // Update form state when the 'todo' prop changes (e.g., when a new todo is selected for editing)
+  // Update formData state when the 'todo' prop changes (e.g., when a new todo is selected for editing)
   useEffect(() => {
-    if (todo) {
-      setForm({ id: todo.id, text: todo.text, completed: todo.completed });
-    }
+    todo && setFormData({ ...todo });
   }, [todo]);
+
+  // Functions
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar({ open: true, message, severity });
+  };
 
   // Handle input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm({
-      ...form,
+    setFormData({
+      ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
     setError("");
   };
 
-  // Handle form submission
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.text.trim()) {
-      setError("نص المهمة مطلوب");
+    if (!formData.text.trim()) {
+      setError(t.enterTodoText);
       return;
     }
     setLoading(true);
     try {
       // Simulate an asynchronous operation (e.g., saving to a local storage or a mock API)
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      onUpdate(form); // Call the onUpdate function passed from TodoList
-      setSnackbar({
-        open: true,
-        message: "تم تعديل المهمة بنجاح!",
-        severity: "success",
-      });
-      onClose(); // Close the dialog on success
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      onUpdate(formData); // Call the onUpdate function passed from TodoList
+      onClose();
     } catch (error) {
-      setSnackbar({
-        open: true,
-        message: "حدث خطأ أثناء تعديل المهمة" + { error },
-        severity: "error",
-      });
+      showSnackbar("حدث خطأ أثناء تعديل المهمة" + { error }, "error");
     } finally {
       setLoading(false);
     }
@@ -74,9 +75,7 @@ function EditTodo({ onClose, todo, onUpdate }) {
     setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
-  if (!todo) {
-    return null; // Don't render if no todo is being edited
-  }
+  if (!todo) return null; // Don't render if no todo is being edited
 
   return (
     <>
@@ -84,35 +83,52 @@ function EditTodo({ onClose, todo, onUpdate }) {
       <form onSubmit={handleSubmit} className="flex flex-col space-y-0">
         <DialogContent dividers>
           <div className="form-group">
-            <label htmlFor="text">نص المهمة</label>
+            <label htmlFor="text">{t.todoTitle}</label>
             <input
               type="text"
               id="text"
               name="text"
               placeholder={t.addNewTodo}
-              value={form.text}
+              value={formData.text}
               onChange={handleChange}
               className="form-control"
             />
           </div>
           <div className="form-group">
-            <label htmlFor="completed">حالة المهمة</label>
+            <label htmlFor="completed">{t.todoStatus}</label>
             <select
               id="completed"
               name="completed"
-              value={form.completed}
+              value={formData.completed}
               onChange={handleChange}
               className="form-control"
             >
-              <option value={true}>مكتملة</option>
-              <option value={false}>غير مكتملة</option>
+              <option value="true">{t.completed}</option>
+              <option value="false">{t.incomplete}</option>
             </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="details">{t.details}</label>
+            <textarea
+              id="details"
+              name="details"
+              rows={4}
+              value={formData.details}
+              onChange={handleChange}
+              className="form-control"
+            ></textarea>
           </div>
           {error && <small className="text-red-500 text-sm">{error}</small>}
         </DialogContent>
         <DialogActions>
-          <Button type="submit" variant="contained" disabled={loading}>
-            {loading ? "جاري الحفظ..." : t.save}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disableElevation
+            disabled={loading}
+          >
+            {loading ? "جاري الحفظ..." : t.edit}
           </Button>
         </DialogActions>
       </form>

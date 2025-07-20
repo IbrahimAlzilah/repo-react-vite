@@ -5,10 +5,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-function AlertDialog({ title, content, onClose, onConfirm }) {
-  const handleConfirm = () => {
+function AlertDialog({ title, content, onClose, onConfirm, translation }) {
+  // Var
+  const t = translation || {};
+  
+  // Functions
+  const confirmDeleteTodo = () => {
     onConfirm?.(); // Safe call
-    onClose?.(); 
+    onClose?.();
   };
 
   return (
@@ -18,9 +22,9 @@ function AlertDialog({ title, content, onClose, onConfirm }) {
         <DialogContentText className="text-center">{content}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>إغلاق</Button>
-        <Button onClick={handleConfirm} variant="contained" color="error">
-          تاكيد الحذف
+        <Button onClick={onClose}>{t.close || "Close"}</Button>
+        <Button onClick={confirmDeleteTodo} variant="contained" color="error">
+          {t.confirmDelete || "Confirm Delete"}
         </Button>
       </DialogActions>
     </>
@@ -32,6 +36,7 @@ AlertDialog.propTypes = {
   content: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  translation: PropTypes.object.isRequired,
 };
 
 export default AlertDialog;

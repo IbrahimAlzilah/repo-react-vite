@@ -1,103 +1,141 @@
-// React Imports
-import { useState, useContext } from "react";
-
-// Mui Components
+import { useState, useContext, useEffect } from "react";
 import { Typography, Button } from "@mui/material";
 
-// Components
 import CustomCard from "../ui/CustomCard";
 import TooltipIconButton from "../ui/TooltipIconButton";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import CustomSnackbar, { initSnackbar } from "../CustomSnackbar";
 
-// Components
 import Todo from "./Todo";
 import EditTodo from "./EditTodo";
 import CustomDialog from "../mui/dialogs/CustomDialog";
 
+const LOCAL_STORAGE_KEY = "todos";
+
+// Initial Todos
 const initialTodos = [
-  { id: 1, text: "مهمة تجريبية 1", completed: false },
-  { id: 2, text: "مهمة تجريبية 2", completed: true },
-  { id: 3, text: "مهمة تجريبية 3", completed: false },
+  {
+    id: 1,
+    text: "مهمة تجريبية 1",
+    details: "تفاصيل المهمة 1",
+    completed: false,
+    createdAt: new Date().toLocaleString(),
+    updatedAt: null,
+  },
+  {
+    id: 2,
+    text: "مهمة تجريبية 2",
+    details: "تفاصيل المهمة 2",
+    completed: true,
+    createdAt: new Date().toLocaleString(),
+    updatedAt: null,
+  },
+  {
+    id: 3,
+    text: "مهمة تجريبية 3",
+    details: "تفاصيل المهمة 3",
+    completed: false,
+    createdAt: new Date().toLocaleString(),
+    updatedAt: null,
+  },
 ];
+
+// Utility functions for localStorage
+const getStoredTodos = () => {
+  try {
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : initialTodos;
+  } catch {
+    return initialTodos;
+  }
+};
+
+const setStoredTodos = (todos) => {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
+};
 
 function TodoList() {
   // States
-  const [open, setOpen] = useState(false);
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState([]);
   const [newTodoText, setNewTodoText] = useState("");
   const [snackbar, setSnackbar] = useState(initSnackbar);
-  const [editingTodo, setEditingTodo] = useState(null); // New state to hold the todo being edited
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [editingTodo, setEditingTodo] = useState(null); // state to hold the todo being edited
 
   // Hooks
   const { t } = useContext(LanguageContext);
 
+  // Load todos from localStorage on mount
+  useEffect(() => {
+    setTodos(getStoredTodos());
+  }, []);
+
   // Functions
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    setEditingTodo(null); // Clear the editing todo when dialog closes
+  const saveTodos = (updatedTodos) => {
+    setTodos(updatedTodos);
+    setStoredTodos(updatedTodos);
   };
 
-  const addTodo = () => {
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbar({ open: true, message, severity });
+  };
+
+  const handleAddTodo = () => {
     if (newTodoText.trim() === "") {
-      setSnackbar({
-        open: true,
-        message: "الرجاء إدخال نص المهمة",
-        severity: "error",
-      });
+      showSnackbar(t.enterTodoText, "error");
       return;
     }
     const newTodo = {
-      id: todos.length > 0 ? Math.max(...todos.map((t) => t.id)) + 1 : 1, // توليد ID فريد
+      id: todos.length > 0 ? Math.max(...todos.map((t) => t.id)) + 1 : 1,
       text: newTodoText,
+      details: "",
       completed: false,
+      createdAt: new Date().toLocaleString(), // toLocaleString("ar-EG")
+      updatedAt: null,
     };
-    // إنشاء مصفوفة جديدة بإضافة العنصر الجديد
-    setTodos([...todos, newTodo]);
-    setNewTodoText(""); // مسح حقل الإدخال
-    setSnackbar({
-      open: true,
-      message: "تمت إضافة المهمة بنجاح!",
-      severity: "success",
-    });
+    const updatedTodos = [...todos, newTodo];
+    saveTodos(updatedTodos);
+    setNewTodoText("");
+    showSnackbar(t.addedSuccess);
   };
 
-  const handleTodoComplete = (id) => {
-    // إنشاء مصفوفة جديدة بتعديل العنصر المطلوب
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
+  const toggleTodoComplete = (id) => {
+    // Create a new array with the updated todo
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
     );
+    saveTodos(updatedTodos);
   };
 
-  const editTodo = (id) => {
-    const todoToEdit = todos.find((todo) => todo.id === id);
-    setEditingTodo(todoToEdit); // Set the todo to be edited
-    handleOpen();
+  const handleEditTodo = (id) => {
+    const selected = todos.find((todo) => todo.id === id);
+    setEditingTodo(selected); // Set the todo to be edited
+    setDialogOpen(true);
   };
 
-  const updateTodo = (updatedTodo) => {
-    setTodos(
-      todos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
+  // Handle edit todo [After click on edit button]
+  const handleUpdateTodo = (updatedTodo) => {
+    const updatedAt = new Date().toLocaleString();
+    const updatedTodos = todos.map((todo) =>
+      todo.id === updatedTodo.id ? { ...updatedTodo, updatedAt } : todo
     );
+    saveTodos(updatedTodos);
+    showSnackbar(t.updatedSuccess);
     handleClose();
-    setSnackbar({
-      open: true,
-      message: "تم تعديل المهمة بنجاح!",
-      severity: "success",
-    });
   };
 
-  const removeTodo = (id) => {
-    // إنشاء مصفوفة جديدة باستثناء العنصر المطلوب
-    setTodos(todos.filter((todo) => todo.id !== id));
-    setSnackbar({
-      open: true,
-      message: "تم الحذف بنجاح!",
-      severity: "success",
-    });
+  // Handle remove todo [After click on confirm button]
+  const handleDeleteTodo = (id) => {
+    // Filter todos to delete the one with the given id
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    saveTodos(updatedTodos);
+    showSnackbar(t.deletedSuccess);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+    // Clear the editing todo when dialog closes
+    setEditingTodo(null);
   };
 
   // Handle snackbar close
@@ -113,47 +151,59 @@ function TodoList() {
             type="text"
             value={newTodoText}
             onChange={(e) => setNewTodoText(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                addTodo();
-              }
-            }}
-            placeholder={t.addNewTodo + "..."}
-            className="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={(e) => e.key === "Enter" && handleAddTodo()}
+            placeholder={`${t.addNewTodo}...`}
+            className="flex-grow focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <TooltipIconButton
             title={t.addTodo}
             iconClass="sm-plus-circle-line text-xl"
-            onClick={addTodo}
+            onClick={handleAddTodo}
             color="primary"
             component={Button}
             variant="contained"
             disableElevation
           />
         </div>
-        <ul>
-          {todos.length === 0 ? (
-            <Typography variant="body1" className="text-gray dark:text-gray-200 text-center mt-4">
-              {t.noTodos}
-            </Typography>
-          ) : (
-            todos.map((todo) => (
-              <li key={todo.id} className={`todo-item rounded-md shadow-sm ${todo.completed && 'is-completed'}`}>
+
+        {todos.length === 0 ? (
+          <Typography
+            variant="body1"
+            className="text-center text-gray-500 dark:text-gray-300 mt-4"
+          >
+            {t.noTodos}
+          </Typography>
+        ) : (
+          <ul className="space-y-2">
+            {todos.map((todo) => (
+              <li
+                key={todo.id}
+                className={`todo-item rounded-md shadow-sm ${
+                  todo.completed ? "is-completed" : ""
+                }`}
+              >
                 <Todo
                   todo={todo}
-                  handleTodoComplete={handleTodoComplete}
-                  editTodo={editTodo}
-                  removeTodo={removeTodo}
+                  onToggleComplete={toggleTodoComplete}
+                  onEdit={handleEditTodo}
+                  onDelete={handleDeleteTodo}
                 />
               </li>
-            ))
-          )}
-        </ul>
+            ))}
+          </ul>
+        )}
       </CustomCard>
-      <CustomDialog maxWidth="sm" open={open} onClose={handleClose}>
-        {/* Pass the editingTodo to EditTodo component and an update function */}
-        <EditTodo todo={editingTodo} onClose={handleClose} onUpdate={updateTodo} />
+
+      <CustomDialog maxWidth="sm" open={isDialogOpen} onClose={handleClose}>
+        {editingTodo && (
+          <EditTodo
+            todo={editingTodo}
+            onClose={handleClose}
+            onUpdate={handleUpdateTodo}
+          />
+        )}
       </CustomDialog>
+
       <CustomSnackbar
         open={snackbar.open}
         message={snackbar.message}

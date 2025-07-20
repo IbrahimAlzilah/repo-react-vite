@@ -223,6 +223,7 @@ button {
   font-size: .75em;
   font-weight: 500;
   cursor: pointer;
+  text-transform: capitalize;
   transition: border-color 0.25s;
 }
 
