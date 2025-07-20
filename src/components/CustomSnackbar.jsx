@@ -1,3 +1,4 @@
+
 import React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -8,10 +9,6 @@ export const initSnackbar = {
   open: false,
   message: "",
   severity: "success",
-};
-
-export const showSnackbar = (message, severity = "success") => {
-  initSnackbar({ open: true, message, severity });
 };
 
 const Alert = React.forwardRef(function Alert(props, ref) {

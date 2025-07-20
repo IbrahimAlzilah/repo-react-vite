@@ -84,7 +84,7 @@ const Todo = ({ todo, onToggleComplete, onEdit, onDelete }) => {
 
       {viewTodo && (
         <CustomDialog maxWidth="sm" open={viewTodo} onClose={handleCloseView}>
-          <ViewTodo todo={todo} onClose={handleCloseView} translation={t} />
+          <ViewTodo todo={todo} onClose={handleCloseView} t={t} />
         </CustomDialog>
       )}
     </>

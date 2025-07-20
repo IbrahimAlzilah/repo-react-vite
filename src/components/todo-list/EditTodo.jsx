@@ -112,7 +112,7 @@ function EditTodo({ todo, onClose, onUpdate }) {
             <textarea
               id="details"
               name="details"
-              rows={4}
+              rows={5}
               value={formData.details}
               onChange={handleChange}
               className="form-control"
