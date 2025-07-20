@@ -1,7 +1,7 @@
 import useMetadata from "../hooks/useMetadata"; // استيراد الـ Custom Hook
 import { useContext } from "react";
 import { LanguageContext } from "../contexts/LanguageContext";
-import TodoList from "../components/TodoList";
+import TodoList from "../components/todo-list";
 import UserProfileEditor from "../components/UserProfileEditor";
 import SafeCounter from "../components/examples/SafeCounter"; // استيراد مكون SafeCounter
 import CustomDivider from "../components/ui/CustomDivider";

@@ -26,8 +26,8 @@ function SafeCounter() {
   return (
     <CustomCard title={`العداد الآمن: ${count}`}>
       <div className="flex items-center justify-center gap-2">
-        <CustomButton text="زيادة بـ 1" onClick={incrementByOne} />
-        <CustomButton text="زيادة بـ 5 (بشكل آمن)" onClick={incrementByFive} />
+        <CustomButton text="زيادة بـ 1" onClick={incrementByOne} className="text-gray-100 dark:text-gray-400e" />
+        <CustomButton text="زيادة بـ 5 (بشكل آمن)" onClick={incrementByFive} className="text-gray-100 dark:text-gray-400e" />
       </div>
     </CustomCard>
   );

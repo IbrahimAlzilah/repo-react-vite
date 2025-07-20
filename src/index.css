@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /*
   ----------------------------------------------------
@@ -234,7 +235,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-[data-theme="light"] button:not(.MuiIconButton-root) {
+[data-theme="light"] button:not(.MuiIconButton-root):not(.MuiButton-root) {
   color: #f0f0f0 !important;
 }
 
@@ -399,10 +400,10 @@ input::placeholder,
 }
 
 select.form-control {
-  padding-right: 2.5rem;
+  padding-inline-end: 2.5rem;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%236c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
   background-repeat: no-repeat;
-  background-position: right 0.75rem center;
+  background-position: 0.5rem center;
   background-size: 1rem;
 }
 
@@ -485,4 +486,19 @@ select.form-control {
 .TooltipSpan {
   display: inline-block;
   cursor: not-allowed;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-inline-start: 3px solid transparent;
+  outline: 1px solid var(--border-color);
+  gap: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.todo-item.is-completed {
+  border-color: var(--success-color);
 }

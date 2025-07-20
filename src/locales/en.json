@@ -16,6 +16,8 @@
   "incomplete": "Incomplete",
   "todoList": "Todo List",
   "addTodo": "Add Todo",
+  "addNewTodo": "Add New Todo",
+  "noTodos": "No tasks. Add a new task!",
   "notFound": "Page Not Found",
   "auth": {
     "name": "name",

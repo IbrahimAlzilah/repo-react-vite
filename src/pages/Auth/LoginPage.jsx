@@ -94,8 +94,9 @@ const LoginPage = () => {
         });
       }
     } catch (error) {
-      const message = error?.response?.data?.message || "حدث خطأ أثناء تسجيل الدخول";
-      setSnackbar({ open: true, message, severity: "error"});
+      const message =
+        error?.response?.data?.message || "حدث خطأ أثناء تسجيل الدخول";
+      setSnackbar({ open: true, message, severity: "error" });
     } finally {
       setLoading(false);
     }
@@ -116,7 +117,7 @@ const LoginPage = () => {
           value={form.username}
           onChange={handleChange}
           autoComplete="username"
-          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="form-control"
           autoFocus
         />
         <input
@@ -126,7 +127,7 @@ const LoginPage = () => {
           value={form.password}
           onChange={handleChange}
           autoComplete="current-password"
-          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="form-control"
         />
         {error && <small className="text-red-500 text-sm">{error}</small>}
         <CustomButton

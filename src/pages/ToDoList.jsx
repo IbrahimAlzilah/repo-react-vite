@@ -1,6 +1,6 @@
 import React from "react";
 import CustomDivider from "../components/ui/CustomDivider";
-import TodoList from "../components/TodoList";
+import TodoList from "../components/todo-list";
 
 const ToDoList = () => {
   return (

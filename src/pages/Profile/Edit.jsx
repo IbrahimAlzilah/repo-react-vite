@@ -94,7 +94,7 @@ function EditProfile({ onClose, data }) {
               value={form.username}
               onChange={handleChange}
               autoComplete="new-username"
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="form-control"
             />
           </div>
           <div className="form-group">
@@ -107,7 +107,7 @@ function EditProfile({ onClose, data }) {
               value={form.name}
               onChange={handleChange}
               autoComplete="name"
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="form-control"
             />
           </div>
           <div className="form-group">
@@ -120,7 +120,7 @@ function EditProfile({ onClose, data }) {
               value={form.email}
               onChange={handleChange}
               autoComplete="email"
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="form-control"
             />
           </div>
           {error && <small className="text-red-500 text-sm">{error}</small>}
