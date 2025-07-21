@@ -1,9 +1,16 @@
+// React Imports
 import { useState, useContext, useEffect } from "react";
+
+// Mui Imports
 import { Typography, Button } from "@mui/material";
 
+// Hook Imports
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { useAuth } from "../../contexts/auth";
+
+// Components Imports
 import CustomCard from "../ui/CustomCard";
 import TooltipIconButton from "../ui/TooltipIconButton";
-import { LanguageContext } from "../../contexts/LanguageContext";
 import CustomSnackbar, { initSnackbar } from "../CustomSnackbar";
 
 import Todo from "./Todo";
@@ -21,6 +28,7 @@ const initialTodos = [
     completed: false,
     createdAt: new Date().toLocaleString(),
     updatedAt: null,
+    createdBy: "User1",
   },
   {
     id: 2,
@@ -29,6 +37,7 @@ const initialTodos = [
     completed: true,
     createdAt: new Date().toLocaleString(),
     updatedAt: null,
+    createdBy: "User1",
   },
   {
     id: 3,
@@ -37,6 +46,7 @@ const initialTodos = [
     completed: false,
     createdAt: new Date().toLocaleString(),
     updatedAt: null,
+    createdBy: "User1",
   },
 ];
 
@@ -64,6 +74,8 @@ function TodoList() {
 
   // Hooks
   const { t } = useContext(LanguageContext);
+  const { getCurrentUser } = useAuth();
+  const currentUser = getCurrentUser() || { name: t.unknownUser };
 
   // Load todos from localStorage on mount
   useEffect(() => {
@@ -92,6 +104,7 @@ function TodoList() {
       completed: false,
       createdAt: new Date().toLocaleString(), // toLocaleString("ar-EG")
       updatedAt: null,
+      createdBy: currentUser?.name,
     };
     const updatedTodos = [...todos, newTodo];
     saveTodos(updatedTodos);

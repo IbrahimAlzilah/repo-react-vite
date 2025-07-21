@@ -17,13 +17,13 @@ function AlertDialog({ title, content, onClose, onConfirm, translation }) {
 
   return (
     <>
-      {title && <DialogTitle className="text-center">{title}</DialogTitle>}
+      {title && <DialogTitle>{title}</DialogTitle>}
       <DialogContent>
-        <DialogContentText className="text-center">{content}</DialogContentText>
+        <DialogContentText>{content}</DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>{t.close || "Close"}</Button>
-        <Button onClick={confirmDeleteTodo} variant="contained" color="error">
+      <DialogActions className="flex items-center gap-1">
+        <Button onClick={onClose} autoFocus>{t.close || "Close"}</Button>
+        <Button onClick={confirmDeleteTodo} variant="contained" color="error" autoFocus>
           {t.confirmDelete || "Confirm Delete"}
         </Button>
       </DialogActions>

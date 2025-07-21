@@ -13,7 +13,7 @@
     "delete": "حذف",
     "cancel": "إلغاء",
     "close": "إغلاق",
-    "confirmDelete": "تاكيد الحذف",
+    "confirmDelete": "تأكيد الحذف",
     "add": "إضافة",
     "yes": "نعم",
     "no": "لا",
@@ -38,7 +38,7 @@
     "updatedSuccess": "تم تعديل المهمة بنجاح!",
     "deletedSuccess": "تم حذف المهمة بنجاح!",
     "deleteConfirmText": "هل أنت متأكد أنك تريد حذف هذه المهمة؟",
-    "deleteUndoText": "لا يمكنك التراجع عن الحذف بعد اتمامه",
+    "deleteUndoText": "لا يمكن التراجع عن هذا الإجراء بعد الحذف.",
     "editUserProfile": "تعديل الملف الشخصي",
     "notFound": "لم يتم العثور على الصفحة",
     "auth": {
@@ -51,5 +51,6 @@
     "accountSettings": "إعدادات الحساب",
     "myProfile": "ملفي الشخصي",
     "myAccount": "حسابي",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "unknownUser": "مستخدم غير معروف"
   }
