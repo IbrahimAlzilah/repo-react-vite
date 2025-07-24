@@ -1,33 +1,41 @@
-import { createContext, useState, useEffect } from "react";
+// src/contexts/ThemeContext.js
+import { createContext, useState, useEffect, useMemo } from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { lightTheme, darkTheme } from "../theme";
 
-// 1. إنشاء Context
-export const ThemeContext = createContext(null);
+const getInitialTheme = () => {
+  const storedTheme = localStorage.getItem("app-theme");
+  if (storedTheme === "light" || storedTheme === "dark") return storedTheme;
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return prefersDark ? "dark" : "light";
+};
 
-// 2. إنشاء مكون Provider
-export function ThemeProvider({ children }) {
-  // يمكننا محاولة جلب السمة المفضلة من Local Storage
-  const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem("app-theme");
-    // This is the key change:
-    return savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); // القيمة الافتراضية إذا لم توجد
-  });
+// export const ThemeModeContext = createContext();
+export const ThemeContext = createContext();
 
-  // استخدام useEffect لحفظ السمة في Local Storage وتطبيقها على DOM
-  useEffect(() => {
-    localStorage.setItem("app-theme", theme);
-    // document.body.className = theme;
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]); // يُنفذ هذا الـ effect كلما تغيرت السمة
+const ThemeContextProvider = ({ children }) => {
+  const [mode, setMode] = useState(getInitialTheme);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
   };
 
-  const contextValue = { theme, toggleTheme };
+  const theme = useMemo(() => (mode === "light" ? lightTheme : darkTheme), [mode]);
+
+  useEffect(() => {
+    localStorage.setItem("app-theme", mode);
+    document.documentElement.setAttribute("data-theme", mode);
+  }, [mode]);
 
   return (
-    <ThemeContext.Provider value={contextValue}>
-      {children}
+    <ThemeContext.Provider value={{ mode, toggleTheme }}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
-}
+};
+
+export default ThemeContextProvider;

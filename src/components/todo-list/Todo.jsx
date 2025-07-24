@@ -14,9 +14,9 @@ import AlertDialog from "./AlertDialog";
 import ViewTodo from "./ViewTodo";
 
 const Todo = ({ todo, onToggleComplete, onEdit, onDelete }) => {
-  // States
-  const [viewTodo, setViewTodo] = useState(false);
-  const [deleteAlert, setDeleteAlert] = useState(false);
+  // State Hooks
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [isDeleteAlert, setIsDeleteAlert] = useState(false);
 
   // Hooks
   const { t } = useContext(LanguageContext);
@@ -25,15 +25,15 @@ const Todo = ({ todo, onToggleComplete, onEdit, onDelete }) => {
   const isComplete = todo.completed;
 
   // Functions
-  const handleDeleteAlert = () => setDeleteAlert(true);
-  const handleClose = () => setDeleteAlert(false);
+  const handleDeleteAlert = () => setIsDeleteAlert(true);
+  const handleClose = () => setIsDeleteAlert(false);
 
   const handleShowTodo = () => {
-    setViewTodo(true);
+    setIsViewOpen(true);
   };
 
   const handleCloseView = () => {
-    setViewTodo(false);
+    setIsViewOpen(false);
   };
 
   return (
@@ -72,18 +72,18 @@ const Todo = ({ todo, onToggleComplete, onEdit, onDelete }) => {
           onClick={() => handleDeleteAlert()}
         />
       </div>
-      <CustomDialog maxWidth="xs" open={deleteAlert} onClose={handleClose}>
+      <CustomDialog maxWidth="xs" open={isDeleteAlert} onClose={handleClose}>
         <AlertDialog
           onConfirm={() => onDelete(todo.id)}
-          onClose={() => setDeleteAlert(false)}
+          onClose={() => setIsDeleteAlert(false)}
           title={t.deleteConfirmText}
           content={t.deleteUndoText}
           translation={t}
         />
       </CustomDialog>
 
-      {viewTodo && (
-        <CustomDialog maxWidth="sm" open={viewTodo} onClose={handleCloseView}>
+      {isViewOpen && (
+        <CustomDialog maxWidth="sm" open={isViewOpen} onClose={handleCloseView}>
           <ViewTodo todo={todo} onClose={handleCloseView} t={t} />
         </CustomDialog>
       )}

@@ -43,7 +43,7 @@ const ViewTodo = ({ todo, t = {}, onClose }) => {
         {todo.updatedAt && (
           <FieldDisplay label={t.todoUpdatedAt} value={todo.updatedAt} />
         )}
-        <FieldDisplay label={t.todoCreatedBy} value={todo.createdBy} />
+        <FieldDisplay label={t.createdBy} value={todo.createdBy} />
       </DialogContent>
     </>
   );

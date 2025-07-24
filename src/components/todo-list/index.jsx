@@ -1,22 +1,24 @@
 // React Imports
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useMemo } from "react";
 
-// Mui Imports
-import { Typography, Button } from "@mui/material";
+// MUI Imports
+import { Button } from "@mui/material";
 
-// Hook Imports
+// Context & Hooks
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { useAuth } from "../../contexts/auth";
 
-// Components Imports
+// Components
 import CustomCard from "../ui/CustomCard";
 import TooltipIconButton from "../ui/TooltipIconButton";
 import CustomSnackbar, { initSnackbar } from "../CustomSnackbar";
-
+import CustomDialog from "../mui/dialogs/CustomDialog";
+import TodoFilterSelect from "./TodoFilterSelect";
 import Todo from "./Todo";
 import EditTodo from "./EditTodo";
-import CustomDialog from "../mui/dialogs/CustomDialog";
+import NotTodos from "./NotTodos";
 
+// Constants
 const LOCAL_STORAGE_KEY = "todos";
 
 // Initial Todos
@@ -64,6 +66,23 @@ const setStoredTodos = (todos) => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
 };
 
+// Utility: Filter Todos logic
+// function filterTodos(todos, filter) {
+//   if (filter === "completed") return todos.filter((todo) => todo.completed);
+//   if (filter === "incomplete") return todos.filter((todo) => !todo.completed);
+//   return todos; // returen all todos
+// }
+
+function filterTodos(todos, filter, user) {
+  let result = todos;
+  if (user && user !== "All Users") {
+    result = result.filter((todo) => todo.createdBy === user);
+  }
+  if (filter === "completed") return result.filter((todo) => todo.completed);
+  if (filter === "incomplete") return result.filter((todo) => !todo.completed);
+  return result;
+}
+
 function TodoList() {
   // States
   const [todos, setTodos] = useState([]);
@@ -71,16 +90,25 @@ function TodoList() {
   const [snackbar, setSnackbar] = useState(initSnackbar);
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [editingTodo, setEditingTodo] = useState(null); // state to hold the todo being edited
+  const [filter, setFilter] = useState("all");
+  const [user, setUser] = useState("All Users");
 
-  // Hooks
+  // Contexts & Hooks
   const { t } = useContext(LanguageContext);
   const { getCurrentUser } = useAuth();
+
+  // Vars
   const currentUser = getCurrentUser() || { name: t.unknownUser };
 
   // Load todos from localStorage on mount
   useEffect(() => {
     setTodos(getStoredTodos());
   }, []);
+
+  // Memoized filtered todos
+  const visibleTodos = useMemo(() => {
+    return filterTodos(todos, filter, user);
+  }, [todos, filter, user]);
 
   // Functions
   const saveTodos = (updatedTodos) => {
@@ -145,10 +173,20 @@ function TodoList() {
     showSnackbar(t.deletedSuccess);
   };
 
-  const handleClose = () => {
-    setDialogOpen(false);
-    // Clear the editing todo when dialog closes
-    setEditingTodo(null);
+  const handleClose = (e, reason) => {
+    if (reason !== "backdropClick") {
+      setDialogOpen(false);
+      // Clear the editing todo when dialog closes
+      setEditingTodo(null);
+    }
+  };
+
+  const handleFilterChange = (value) => {
+    setFilter(value);
+  };
+
+  const handleUserChange = (event) => {
+    setUser(event.target.value);
   };
 
   // Handle snackbar close
@@ -158,7 +196,19 @@ function TodoList() {
 
   return (
     <>
-      <CustomCard title={t.todoList}>
+      <CustomCard
+        title={t.todoList}
+        action={
+          <TodoFilterSelect
+            todos={todos}
+            filterValue={filter}
+            filterUser={user}
+            onFilterChange={handleFilterChange}
+            onChangeUser={handleUserChange}
+            dictionary={t}
+          />
+        }
+      >
         <div className="flex items-center justify-between gap-2 mb-3">
           <input
             type="text"
@@ -179,21 +229,14 @@ function TodoList() {
           />
         </div>
 
-        {todos.length === 0 ? (
-          <Typography
-            variant="body1"
-            className="text-center text-gray-500 dark:text-gray-300 mt-4"
-          >
-            {t.noTodos}
-          </Typography>
+        {visibleTodos.length === 0 ? (
+          <NotTodos dictionary={t} />
         ) : (
           <ul className="space-y-2">
-            {todos.map((todo) => (
+            {visibleTodos?.map((todo) => (
               <li
                 key={todo.id}
-                className={`todo-item rounded-md shadow-sm ${
-                  todo.completed ? "is-completed" : ""
-                }`}
+                className={`todo-item shadow-sm ${todo.completed ? "is-completed" : ""}`}
               >
                 <Todo
                   todo={todo}
@@ -210,13 +253,13 @@ function TodoList() {
       <CustomDialog maxWidth="sm" open={isDialogOpen} onClose={handleClose}>
         {editingTodo && (
           <EditTodo
+            disableEscapeKeyDown
             todo={editingTodo}
             onClose={handleClose}
             onUpdate={handleUpdateTodo}
           />
         )}
       </CustomDialog>
-
       <CustomSnackbar
         open={snackbar.open}
         message={snackbar.message}

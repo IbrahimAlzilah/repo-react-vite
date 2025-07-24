@@ -11,11 +11,12 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 function MainLayout() {
-  const { theme } = useContext(ThemeContext);
+  const { mode } = useContext(ThemeContext);
   const { t } = useContext(LanguageContext);
 
   const contentStyle = {
-    backgroundColor: theme === "dark" ? "#1e1e1e" : "white",
+    // backgroundColor: mode === "dark" ? "#1e1e1e" : "white",
+    backgroundColor: mode === "dark" ? "inherit" : "white",
   };
 
   return (
