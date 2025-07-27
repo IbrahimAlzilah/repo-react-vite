@@ -13,6 +13,7 @@ const UseRef = lazy(() => import("../pages/UseRef"));
 const UseContext = lazy(() => import("../pages/UseContext"));
 const MuiPage = lazy(() => import("../pages/MuiPage"));
 const ToDoList = lazy(() => import("../pages/ToDoList"));
+const Posts = lazy(() => import("../pages/Posts"));
 const UserProfile = lazy(() => import("../pages/Profile"));
 
 const LoadingFallback = () => (
@@ -29,6 +30,7 @@ const routes = [
   { path: "/useContext", element: <UseContext /> },
   { path: "/mui", element: <MuiPage /> },
   { path: "/todoList", element: <ToDoList /> },
+  { path: "/posts", element: <Posts /> },
   { path: "/user-profile", element: <UserProfile /> },
 ];
 

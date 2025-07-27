@@ -1,0 +1,38 @@
+import Typography from "@mui/material/Typography";
+
+const PostCard = ({ post, isLastPost, lastElementRef }) => {
+  return (
+    <div
+      key={post.id}
+      className="bg-white rounded shadow p-3"
+      ref={isLastPost ? lastElementRef : null}
+    >
+      <div className="flex items-center mb-2">
+        <img
+          src={post.author.profile_image}
+          alt="Author"
+          className="w-10 h-10 rounded-full me-2 border"
+        />
+        <span className="font-semibold text-sm">{post.author.name}</span>
+      </div>
+      <img
+        src={post.image}
+        alt={post.body?.slice(0, 30) || "Post image"}
+        className="rounded mb-2 w-full h-56 object-cover"
+      />
+      <div className="text-xs text-gray-500 mb-1">{post.created_at}</div>
+      <Typography variant="body2" className="mb-2">
+        {post.body}
+      </Typography>
+      <Typography
+        variant="caption"
+        color="primary"
+        sx={{ cursor: "pointer", fontWeight: 500 }}
+      >
+        Comments ({post.comments_count})
+      </Typography>
+    </div>
+  );
+};
+
+export default PostCard;

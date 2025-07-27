@@ -10,33 +10,33 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import CustomSnackbar, { initSnackbar } from "../../components/CustomSnackbar";
 
-const initialForm = { name: "", username: "", password: "" };
+const initialData = { name: "", username: "", email: "", password: "" };
 
 const RegisterPage = () => {
   const { t } = useContext(LanguageContext);
   const { login } = useAuth();
-  useMetadata(`إنشاء حساب | ${t?.appName || "App"}`);
+  useMetadata(`${t.register} | ${t?.appName || "App"}`);
 
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState(initSnackbar);
-  const [form, setForm] = useState(initialForm);
+  const [formData, setFormData] = useState(initialData);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   // Handle input changes
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
     setError("");
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.username.trim() || !form.password.trim()) {
+    if (!formData.name.trim() || !formData.username.trim() || !formData.password.trim()) {
       setError("جميع الحقول مطلوبة");
       return;
     }
-    if (form.password.length < 6) {
+    if (formData.password.length < 6) {
       setError("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
       return;
     }
@@ -49,7 +49,7 @@ const RegisterPage = () => {
     const url = `${baseUrl}/register`;
     setLoading(true);
     try {
-      const response = await axios.post(url, form, {
+      const response = await axios.post(url, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -62,7 +62,7 @@ const RegisterPage = () => {
           message: "تم إنشاء الحساب بنجاح!",
           severity: "success",
         });
-        setForm(initialForm); // Reset form
+        setFormData(initialData); // Reset form
         setTimeout(() => navigate("/login"), 2000);
       } else {
         setSnackbar({
@@ -86,13 +86,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <CustomCard title="إنشاء حساب" className="text-center">
+    <CustomCard title={t.register} className="text-center">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <input
           type="text"
           name="name"
           placeholder={t.auth.name}
-          value={form.name}
+          value={formData.name}
           onChange={handleChange}
           autoComplete="name"
           className="form-control"
@@ -101,16 +101,25 @@ const RegisterPage = () => {
           type="text"
           name="username"
           placeholder={t.auth.username}
-          value={form.username}
+          value={formData.username}
           onChange={handleChange}
           autoComplete="username"
+          className="form-control"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder={t.auth.email}
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="new-email"
           className="form-control"
         />
         <input
           type="password"
           name="password"
           placeholder={t.auth.password}
-          value={form.password}
+          value={formData.password}
           onChange={handleChange}
           autoComplete="new-password"
           className="form-control"
@@ -122,7 +131,7 @@ const RegisterPage = () => {
           variant="contained"
           disabled={loading}
         >
-          {loading ? "جاري الإنشاء..." : "إنشاء حساب"}
+          {loading ? "جاري الإنشاء..." : t.register}
         </Button>
       </form>
       <Divider sx={{ my: 2 }} />

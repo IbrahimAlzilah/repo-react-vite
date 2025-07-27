@@ -63,6 +63,7 @@ const links = [
   },
   { name: "MUI", path: "/mui" },
   { name: "Todo List", path: "/todoList" },
+  { name: "Posts", path: "/posts" },
 ];
 
 function Navigation() {

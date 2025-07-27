@@ -12,7 +12,7 @@ import CustomSnackbar, { initSnackbar } from "../../components/CustomSnackbar";
 import axios from "axios";
 
 // Initial form state
-const initialForm = { username: "", password: "" };
+const initialData = { username: "", password: "" };
 
 const LoginPage = () => {
   // Context and hooks
@@ -21,13 +21,13 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   // Metadata
-  useMetadata(`تسجيل الدخول | ${t?.appName || "App"}`);
+  useMetadata(`${t.login} | ${t?.appName || "App"}`);
 
-  // State management
+  // States
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState(initSnackbar);
-  const [form, setForm] = useState({
-    ...initialForm,
+  const [formData, setFormData] = useState({
+    ...initialData,
     username: getCurrentUser()?.username || "",
   });
   const [error, setError] = useState("");
@@ -35,7 +35,7 @@ const LoginPage = () => {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     setError(""); // Clear error when user starts typing
   };
 
@@ -45,12 +45,12 @@ const LoginPage = () => {
     setError("");
 
     // Validation
-    if (!form.username.trim() || !form.password.trim()) {
+    if (!formData.username.trim() || !formData.password.trim()) {
       setError("يرجى إدخال اسم المستخدم وكلمة المرور");
       return;
     }
 
-    if (form.password.length < 6) {
+    if (formData.password.length < 6) {
       setError("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
       return;
     }
@@ -66,7 +66,7 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(url, form, {
+      const response = await axios.post(url, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -82,7 +82,7 @@ const LoginPage = () => {
 
       if (loginSuccess) {
         // Reset form
-        setForm(initialForm);
+        setFormData(initialData);
 
         // Redirect to home page after a short delay
         setTimeout(() => navigate("/"), 1500);
@@ -108,13 +108,13 @@ const LoginPage = () => {
   };
 
   return (
-    <CustomCard title="تسجيل الدخول" className="text-center">
+    <CustomCard title={t.login} className="text-center">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <input
           type="text"
           name="username"
           placeholder={t.auth.username}
-          value={form.username}
+          value={formData.username}
           onChange={handleChange}
           autoComplete="username"
           className="form-control"
@@ -124,7 +124,7 @@ const LoginPage = () => {
           type="password"
           name="password"
           placeholder={t.auth.password}
-          value={form.password}
+          value={formData.password}
           onChange={handleChange}
           autoComplete="current-password"
           className="form-control"
@@ -136,7 +136,7 @@ const LoginPage = () => {
           variant="contained"
           disabled={loading}
         >
-          {loading ? "جاري التسجيل..." : "تسجيل الدخول"}
+          {loading ? "جاري التسجيل..." : t.login}
         </CustomButton>
       </form>
       <CustomDivider />

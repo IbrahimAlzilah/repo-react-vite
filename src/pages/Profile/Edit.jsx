@@ -85,19 +85,6 @@ function EditProfile({ onClose, data }) {
       <form onSubmit={handleSubmit} className="flex flex-col space-y-0">
         <DialogContent dividers>
           <div className="form-group">
-            <label htmlFor="username">{t.auth.username}</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder={t.auth.username}
-              value={form.username}
-              onChange={handleChange}
-              autoComplete="new-username"
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="name">{t.auth.name}</label>
             <input
               type="text"
@@ -107,6 +94,19 @@ function EditProfile({ onClose, data }) {
               value={form.name}
               onChange={handleChange}
               autoComplete="name"
+              className="form-control"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">{t.auth.username}</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder={t.auth.username}
+              value={form.username}
+              onChange={handleChange}
+              autoComplete="new-username"
               className="form-control"
             />
           </div>
@@ -130,7 +130,9 @@ function EditProfile({ onClose, data }) {
             type="submit"
             variant="contained"
             disabled={loading}
+            // loading={loading}
             // onClick={onClose}
+            disableElevation
           >
             {loading ? "جاري الحفظ..." : t.save}
           </Button>

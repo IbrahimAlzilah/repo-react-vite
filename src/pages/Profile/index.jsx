@@ -153,6 +153,13 @@ const UserProfile = () => {
               >
                 Email: {data.email}
               </Typography>
+              <Divider className="my-3"/>
+              <Typography variant="body1">
+                Comments Count: {data.comments_count}
+              </Typography>
+              <Typography variant="body1">
+                Posts Count: {data.posts_count}
+              </Typography>
             </>
           )}
         </CardContent>

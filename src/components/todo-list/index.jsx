@@ -92,6 +92,7 @@ function TodoList() {
   const [editingTodo, setEditingTodo] = useState(null); // state to hold the todo being edited
   const [filter, setFilter] = useState("all");
   const [user, setUser] = useState("All Users");
+  const [viewMode, setViewMode] = useState('list')
 
   // Contexts & Hooks
   const { t } = useContext(LanguageContext);
@@ -189,6 +190,10 @@ function TodoList() {
     setUser(event.target.value);
   };
 
+  const handleViewMode = newMode => {
+    setViewMode(newMode)
+  }
+
   // Handle snackbar close
   const handleSnackbarClose = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -199,14 +204,22 @@ function TodoList() {
       <CustomCard
         title={t.todoList}
         action={
-          <TodoFilterSelect
-            todos={todos}
-            filterValue={filter}
-            filterUser={user}
-            onFilterChange={handleFilterChange}
-            onChangeUser={handleUserChange}
-            dictionary={t}
-          />
+          <div className="flex items-center gap-2">
+            <TodoFilterSelect
+              todos={todos}
+              filterValue={filter}
+              filterUser={user}
+              onFilterChange={handleFilterChange}
+              onChangeUser={handleUserChange}
+              dictionary={t}
+            />
+            <TooltipIconButton
+              title={t[viewMode === 'list' ? 'showGrid' : 'showList']}
+              iconClass={viewMode === 'list' ? 'sm-grid-02-line' : 'sm-menu-line'}
+              variant="tonal"
+              onClick={() => handleViewMode(viewMode === 'list' ? 'grid' : 'list')}
+            />
+          </div>
         }
       >
         <div className="flex items-center justify-between gap-2 mb-3">
@@ -232,11 +245,13 @@ function TodoList() {
         {visibleTodos.length === 0 ? (
           <NotTodos dictionary={t} />
         ) : (
-          <ul className="space-y-2">
+          <ul className={`space-y-2 ${viewMode === 'grid' ? "show-grid" : ""}`}>
             {visibleTodos?.map((todo) => (
               <li
                 key={todo.id}
-                className={`todo-item shadow-sm ${todo.completed ? "is-completed" : ""}`}
+                className={`todo-item shadow-sm ${
+                  todo.completed ? "is-completed" : ""
+                }`}
               >
                 <Todo
                   todo={todo}

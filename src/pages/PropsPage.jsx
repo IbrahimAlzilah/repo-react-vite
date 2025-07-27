@@ -12,7 +12,7 @@ function Props() {
   const { t } = useContext(LanguageContext);
   useMetadata(`${t.using} Props | ${t.appName}`); // تعيين عنوان الصفحة
   // حالة لتخزين النص الحالي
-  const [message, setMessage] = useState("مرحباً بك في تطبيقنا!");
+  const [message, setMessage] = useState(t.welcomeMessage);
 
   // دالة لتغيير النص إلى نص جديد
   const changeToGreeting = () => {
@@ -41,7 +41,7 @@ function Props() {
   return (
     <>
       <CustomDivider title={t.using + " props"} />
-      <CustomCard title={message} className="text-center">
+      <CustomCard title={message || t.message} className="text-center">
         <div className="flex items-center justify-center gap-2">
           <CustomButton text="تحية" onClick={changeToGreeting} />
           <CustomButton text="وداع" onClick={changeToFarewell} />
