@@ -26,8 +26,7 @@ function MainLayout() {
       {/* Main content area where different pages will be rendered based on routes */}
       <main className="main-content" style={contentStyle}>
         <div className="mt-3 mb-4">
-          <h2 className="text-xl text-center
-          ">{t.welcomeMessage}</h2>
+          <h2 className="text-xl text-center">{t.welcomeMessage}</h2>
           <CustomDivider />
         </div>
         <Outlet />

@@ -6,7 +6,11 @@ import Divider from "@mui/material/Divider";
 export default function DialogHeader({ title, onClose }) {
   return (
     <>
-      <DialogTitle variant="h6" sx={{ m: 0, p: 2 }} id="custom-dialog-title">
+      <DialogTitle
+        variant="h6"
+        className="flex gap-2 flex-col sm:ps-16 sm:pe-6 sm:pli-16"
+        sx={{ m: 0, p: 2 }}
+      >
         {title}
       </DialogTitle>
       <IconButton

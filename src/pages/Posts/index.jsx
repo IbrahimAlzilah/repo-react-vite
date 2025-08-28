@@ -7,11 +7,12 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Typography from "@mui/material/Typography";
-
+import Button from "@mui/material/Button";
+import OpenDialogOnClick from "../../components/mui/dialogs/OpenDialogOnClick";
 // Components
 import CustomDialog from "../../components/mui/dialogs/CustomDialog";
 import PostCard from "./PostCard";
-import AddPost from "./Edit";
+import AddEditPost from "./Edit";
 const baseUrl = "https://tarmeezAcademy.com/api/v1";
 
 // Custom hook to handle infinite scrolling logic
@@ -61,6 +62,21 @@ const ErrorFallback = ({ message }) => (
     </Typography>
   </Box>
 );
+
+// Vars
+const userData = {
+  firstName: "Seth",
+  lastName: "Hallam",
+  userName: "@shallamb",
+  billingEmail: "shallamb@gmail.com",
+  status: "active",
+  role: "Subscriber",
+  taxId: "Tax-8894",
+  contact: "+1 (234) 464-0600",
+  language: ["English"],
+  country: "France",
+  useAsBillingAddress: true,
+};
 
 const Posts = () => {
   // States
@@ -116,8 +132,43 @@ const Posts = () => {
     setIsOpen(false);
   };
 
+  // Vars
+  const buttonProps = {
+    variant: "outlined",
+    children: "Edit Details",
+  };
+
+  const TestButton = () => {
+    return (
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 20,
+          right: 446,
+          zIndex: 1000,
+        }}
+      >
+        <Fab color="primary" aria-label="add post">
+          <AddIcon />
+        </Fab>
+      </Box>
+    );
+  };
+
   return (
     <>
+      <OpenDialogOnClick
+        element={Button}
+        elementProps={buttonProps}
+        dialog={AddEditPost}
+        // dialogProps={{ data: userData }}
+      />
+       <OpenDialogOnClick
+        element={Button}
+        elementProps={buttonProps}
+        dialog={AddEditPost}
+        dialogProps={{ data: userData }}
+      />
       <div className="mx-auto space-y-4">
         {posts.map((post, index) => {
           // Attach ref to the last post for infinite scrolling
@@ -141,22 +192,16 @@ const Posts = () => {
           </Box>
         )}
 
-        <Box
-          sx={{
-            position: "fixed",
-            bottom: 20,
-            insetInlineEnd: 446,
-            zIndex: 1000,
-          }}
-        >
-          <Fab color="primary" aria-label="add post" onClick={handleOpenDailog}>
-            <AddIcon />
-          </Fab>
-        </Box>
+        <OpenDialogOnClick
+          element={TestButton}
+          elementProps={buttonProps}
+          dialog={AddEditPost}
+          // dialogProps={{ data: userData }}
+        />
       </div>
-      <CustomDialog maxWidth="sm" open={isOpen} onClose={handleClose}>
-        <AddPost onClose={handleClose} onAdding={handleAddPost} />
-      </CustomDialog>
+      {/* <CustomDialog maxWidth="sm" open={isOpen} onClose={handleClose}>
+        <AddEditPost onClose={handleClose} onAdding={handleAddPost} />
+      </CustomDialog> */}
     </>
   );
 };
