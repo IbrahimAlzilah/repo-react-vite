@@ -187,8 +187,8 @@ function Navigation() {
                   className={({ isActive }) =>
                     `block w-full px-4 py-2 text-lg rounded-md transition-colors duration-200 ${
                       isActive
-                        ? "bg-blue-600 text-white"
-                        : "text-blue-100 hover:bg-blue-700"
+                        ? "bg-blue-600 text-blue-100"
+                        : "text-gray-800 hover:bg-blue-700 hover:text-blue-100"
                     }`
                   }
                   end={link.path === "/"}

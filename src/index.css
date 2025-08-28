@@ -236,9 +236,9 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-[data-theme="light"] button:not(.MuiIconButton-root):not(.MuiButton-root) {
+/* [data-theme="light"] button:not(.MuiIconButton-root):not(.MuiButton-root) {
   color: #f0f0f0 !important;
-}
+} */
 
 /* [data-theme="dark"] button {
   color: #f0f0f0;

@@ -17,7 +17,10 @@ const Posts = lazy(() => import("../pages/Posts"));
 const UserProfile = lazy(() => import("../pages/Profile"));
 
 const LoadingFallback = () => (
-  <Box sx={{ width: "100%", minHeight: "60vh", padding: 2 }}>
+  <Box
+    className="flex justify-center items-center min-h-[100vh]"
+    sx={{ width: "100%", minHeight: "60vh" }}
+  >
     <CircularProgress color="primary" size="3rem" />
   </Box>
 );

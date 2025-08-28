@@ -19,7 +19,7 @@ function CustomButton({
   return (
     <button
       type={type}
-      className={`text-xs ${className}`}
+      className={`text-xs text-gray-100 dark:text-gray-200 ${className}`}
       style={buttonStyle}
       onClick={onClick}
       disabled={disabled}
